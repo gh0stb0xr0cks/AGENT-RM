@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ebios-rm-llm"
+version = "0.1.0"
+description = "LLM spécialisé EBIOS RM — Fine-tuning Mistral 7B pour l'analyse de risques ANSSI"
+requires-python = ">=3.10"
+dependencies = [
+    # Orchestration
+    "langchain>=0.3.0",
+    "langchain-openrouter>=0.1.0",
+    "langchain-chroma>=0.1.0",
+    "langchain-community>=0.3.0",
+    "langchain-core>=0.3.0",
+    # Embeddings
+    "openrouter>=0.1.0",
+    "httpx>=0.27.0",
+    # Vector DB
+    "chromadb>=0.5.0",
+    # Fine-tuning
+    "torch>=2.2.0",
+    "transformers>=4.40.0",
+    "peft>=0.10.0",
+    "trl>=0.8.0",
+    "datasets>=2.18.0",
+    "accelerate>=0.27.0",
+    "bitsandbytes>=0.43.0",
+    # Application
+    "fastapi>=0.110.0",
+    "uvicorn>=0.27.0",
+    "streamlit>=1.32.0",
+    # Traitement données
+    "pandas>=2.2.0",
+    "pypdf>=4.0.0",
+    "rank-bm25>=0.2.2",
+    # Utilitaires
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.3.0",
+    "mypy>=1.9.0",
+]
+unsloth = [
+    "unsloth[colab-new]>=0.3.0",   # GPU training optimisé
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["corpus*", "finetuning*", "evaluation*", "rag*",
+           "prompts*", "inference*", "orchestration*", "app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S101"]
