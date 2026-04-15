@@ -1,21 +1,20 @@
-# LLM EBIOS RM — Assistant IA pour l'analyse de risques ANSSI
+# LLM EBIOS RM — AI Assistant for ANSSI Risk Analysis
 
-> **Un modèle de langage spécialisé dans la méthode EBIOS Risk Manager, déployable 100 % hors ligne (air-gapped), conforme à la terminologie officielle ANSSI 2024.**
+> **An open source language model specialized in the EBIOS Risk Manager method, deployable 100% offline (air-gapped), compliant with official ANSSI 2024 terminology.**
 
-[![Licence Apache 2.0](https://img.shields.io/badge/Licence-Apache_2.0-blue.svg)](LICENSE)
+[![Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
-[![Modèle base](https://img.shields.io/badge/Modèle-Mistral_7B_Instruct_v0.3-orange.svg)](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3)
-[![Statut](https://img.shields.io/badge/Statut-POC_en_cours-yellow.svg)]()
-[![ANSSI EBIOS RM](https://img.shields.io/badge/Méthode-EBIOS_RM_2024-red.svg)](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
-[![Qualification ANSSI](https://img.shields.io/badge/Qualification_ANSSI-En_préparation-lightgrey.svg)]()
+[![Base Model](https://img.shields.io/badge/Model-Mistral_7B_Instruct_v0.3-orange.svg)](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3)
+[![Status](https://img.shields.io/badge/Status-POC-yellow.svg)]()
+[![ANSSI EBIOS RM](https://img.shields.io/badge/Method-EBIOS_RM_2024-red.svg)](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
 
 ---
 
-## Présentation
+## Overview
 
-**LLM EBIOS RM** est un assistant IA open source conçu pour accompagner les analystes et consultants en cybersécurité dans la conduite d'analyses de risques numériques selon la méthode [EBIOS Risk Manager](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/) publiée par l'ANSSI.
+**LLM EBIOS RM** is an open source AI assistant designed to help cybersecurity analysts and consultants conduct digital risk analyses using the [EBIOS Risk Manager](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/) method published by ANSSI.
 
-Il repose sur **Mistral 7B Instruct v0.3** fine-tuné sur un corpus d'exemples EBIOS RM annotés, enrichi d'un système RAG (Retrieval-Augmented Generation) indexant la documentation officielle ANSSI. L'ensemble du système fonctionne **intégralement hors ligne** — aucune donnée ne quitte l'infrastructure de l'organisation.
+It is based on **Mistral 7B Instruct v0.3** fine-tuned on annotated EBIOS RM corpus examples, enhanced with a RAG (Retrieval-Augmented Generation) system indexing official ANSSI documentation. The entire system operates **100% offline** — no data leaves the organization's infrastructure.
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -23,178 +22,164 @@ Il repose sur **Mistral 7B Instruct v0.3** fine-tuné sur un corpus d'exemples E
 ├──────────────────────────────────────────────────────┤
 │  ORCHESTRATION (LangChain · ChromaDB · Prompts)      │
 ├──────────────────────────────────────────────────────┤
-│  INFÉRENCE (Mistral 7B fine-tuné · llama.cpp)        │
+│  INFERENCE (Mistral 7B fine-tuned · llama.cpp)       │
 └──────────────────────────────────────────────────────┘
-         100 % local — 100 % offline — Apache 2.0
+          100% local — 100% offline — Apache 2.0
 ```
 
----
+## Why This Project?
 
-## Pourquoi ce projet ?
+The EBIOS RM method is the French and European reference for digital risk assessment. It is recognized by ANSSI, compatible with ISO/IEC 27005:2022, and recommended for homologation and NIS2 compliance processes.
 
-La méthode EBIOS RM est la référence française et européenne pour l'appréciation des risques numériques. Elle est reconnue par l'ANSSI, compatible ISO/IEC 27005:2022, et recommandée pour les démarches d'homologation et de mise en conformité NIS2.
+It is also perceived as **complex to implement**, particularly for:
+- Organizations with less cybersecurity maturity approaching the method for the first time
+- Consultants managing multiple analyses in parallel who need structuring support
+- CISOs who want to document their analyses rigorously without mastering all the nuances of the 5 workshops
 
-Elle est aussi perçue comme **complexe à mettre en œuvre**, notamment pour :
-
-- les organisations moins matures en cybersécurité qui abordent la méthode pour la première fois ;
-- les consultants qui gèrent plusieurs analyses en parallèle et ont besoin d'un appui structurant ;
-- les RSSI qui souhaitent documenter leurs analyses de manière rigoureuse sans maîtriser toutes les subtilités des 5 ateliers.
-
-Les solutions LLM génériques (ChatGPT, Copilot…) ne connaissent pas la terminologie officielle ANSSI 2024, confondent régulièrement les échelles de cotation, et ne peuvent pas être utilisées pour des analyses confidentielles. Ce projet répond à ces trois problèmes simultanément.
+Generic LLM solutions (ChatGPT, Copilot...) do not know official ANSSI 2024 terminology, regularly confuse rating scales, and cannot be used for confidential analyses. This project addresses these three problems simultaneously.
 
 ---
 
-## Fonctionnalités couvertes
+## Key Features
 
-L'assistant guide le praticien à travers l'intégralité des 5 ateliers de la méthode :
+- **5 EBIOS RM Workshops guide** : A1 Scope & Security Baseline, A2 Risk Sources, A3 Strategic Scenarios, A4 Operational Scenarios, A5 Risk Treatment
+- **Deliverable generation** : business values tables, support assets, SR/OV pairs, attack paths, treatment plans
+- **Terminology validation** : permanent compliance with official ANSSI 2024 terminology
+- **Automatic calculation** : stakeholder dangerousness using the official ANSSI formula
+- **100% offline mode** : no data leaves the infrastructure — ideal for confidential analyses
 
-| Atelier | Contenu | Statut |
-|---------|---------|--------|
-| **A1 — Cadrage et socle de sécurité** | Missions, valeurs métier, biens supports, événements redoutés, gravité, socle de sécurité | 🟡 En cours |
-| **A2 — Sources de risque** | Identification et qualification des couples SR/OV, cartographie des sources de risque | 🟡 En cours |
-| **A3 — Scénarios stratégiques** | Écosystème, dangerosité des parties prenantes, chemins d'attaque, mesures sur l'écosystème | 🟡 En cours |
-| **A4 — Scénarios opérationnels** | Modes opératoires, actions élémentaires, vraisemblance (méthodes expresse/standard/avancée) | 🟡 En cours |
-| **A5 — Traitement du risque** | Plan de traitement du risque, risques résiduels, cartographie initiale/résiduelle | 🟡 En cours |
+### Workshops Coverage
 
-**Ce que le LLM fait concrètement :**
+| Workshop | Content | Status |
+|----------|---------|--------|
+| **A1 — Scope & Security Baseline** | Missions, business values, support assets, dreaded events, severity, security baseline | 🟡 In progress |
+| **A2 — Risk Sources** | SR/OV pairs identification, risk sources mapping | 🟡 In progress |
+| **A3 — Strategic Scenarios** | Ecosystem, stakeholder dangerousness, attack paths, ecosystem measures | 🟡 In progress |
+| **A4 — Operational Scenarios** | Operating modes, elementary actions, likelihood (express/standard/advanced methods) | 🟡 In progress |
+| **A5 — Risk Treatment** | Risk treatment plan, residual risks, initial/residual risk map | 🟡 In progress |
 
-- Génère les tableaux de valeurs métier et biens supports à partir d'une description de contexte
-- Propose des couples Sources de risque / Objectifs visés adaptés au secteur d'activité
-- Construit des scénarios stratégiques avec leurs chemins d'attaque
-- Calcule automatiquement les niveaux de dangerosité des parties prenantes selon la formule officielle ANSSI
-- Propose un plan de traitement du risque structuré avec responsables et échéances
-- Vérifie en permanence la conformité terminologique avec la méthode EBIOS RM 2024
+### What the LLM Does
 
----
-
-## Ce que ce projet n'est pas
-
-- **Ce n'est pas un outil de cybersécurité opérationnelle** (SIEM, EDR, scanner de vulnérabilités)
-- **Ce n'est pas un substitut à l'expertise humaine** : il assiste le praticien, ne le remplace pas
-- **Ce n'est pas encore certifié ou qualifié** : la démarche de qualification ANSSI est en cours
-- **Ce n'est pas un service SaaS** : il se déploie exclusivement en local (air-gapped par conception)
+- Generates business values and support assets tables from context description
+- Proposes SR/OV pairs adapted to the activity sector
+- Builds strategic scenarios with attack paths
+- Automatically calculates stakeholder dangerousness levels according to official ANSSI formula
+- Proposes structured risk treatment plan with owners and deadlines
+- Permanently validates terminology compliance with EBIOS RM 2024 method
 
 ---
 
-## Architecture technique
+## Technical Architecture
 
-### Couche inférence
+### Inference Layer
 
-| Composant | Rôle | Détail |
+| Component | Role | Detail |
 |-----------|------|--------|
-| **Mistral 7B Instruct v0.3** | Modèle de base | Licence Apache 2.0, français natif, 7.24B paramètres |
-| **llama.cpp** | Moteur d'inférence | Exécution CPU/GPU, format GGUF |
-| **Ollama** | API REST locale | `http://localhost:11434`, compatible OpenAI |
-| **LM Studio** | Interface utilisateur | Chargement du GGUF fine-tuné |
-| **GGUF Q4_K_M** | Format livrable | ~4.1 Go, 8 Go RAM suffisants en CPU |
+| **Mistral 7B Instruct v0.3** | Base model | Apache 2.0 license, native French, 7.24B parameters |
+| **llama.cpp** | Inference engine | CPU/GPU execution, GGUF format |
+| **Ollama** | Local REST API | `http://localhost:11434`, OpenAI-compatible |
+| **LM Studio** | User interface | Fine-tuned GGUF loading |
+| **GGUF Q4_K_M** | Deliverable format | ~4.1 GB, 8 GB RAM sufficient on CPU |
 
-### Couche orchestration
+### Orchestration Layer
 
-| Composant | Rôle | Détail |
+| Component | Role | Detail |
 |-----------|------|--------|
-| **LangChain 0.3+** | Pipeline LCEL | Chaîne RAG + validation + mémoire |
-| **ChromaDB** | Base vectorielle | Persistante, ~1 800 chunks, offline |
-| **nomic-embed-text** | Embeddings | 768 dims, multilingue, local via Ollama |
-| **BM25** | Retrieval lexical | Retrieval hybride 70% sémantique / 30% lexical |
+| **LangChain 0.3+** | LCEL pipeline | RAG chain + validation + memory |
+| **ChromaDB** | Vector database | Persistent, ~1,800 chunks, offline |
+| **nomic-embed-text** | Embeddings | 768 dims, multilingual, local via Ollama |
+| **BM25** | Lexical retrieval | Hybrid 70% semantic / 30% lexical |
 
-### Pipeline de fine-tuning
+### Fine-tuning Pipeline
 
-| Étape | Outil | Détail |
-|-------|-------|--------|
-| **Corpus** | Scripts Python + Claude API | ~10 000 paires instruction/réponse |
+| Step | Tool | Detail |
+|------|------|--------|
+| **Corpus** | Python scripts + Claude API | ~10,000 instruction/response pairs |
 | **Fine-tuning** | Unsloth + TRL SFTTrainer | QLoRA r=16 α=32, 3 epochs |
-| **Alternative** | LLaMA-Factory | Support multi-GPU (2× RTX 3090) |
 | **Export** | llama.cpp convert | GGUF Q4_K_M + Q5_K_M |
 
-### Paramètres LoRA
+---
 
-```python
-lora_r            = 16      # Rang
-lora_alpha        = 32      # Scaling (α/r = 2.0)
-lora_dropout      = 0.05
-max_seq_length    = 2048
-learning_rate     = 2e-4
-num_train_epochs  = 3
-per_device_batch  = 4       # A100 40 Go
-gradient_accum    = 4       # Effective batch = 16
-```
+## Technical Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| Python | 3.10+ | 3.11+ |
+| RAM | 8 GB | 16 GB |
+| GPU | — | NVIDIA RTX 3060+ (8 GB VRAM) |
+| Storage | 10 GB | 20 GB |
+
+### Hardware for Inference
+
+| Configuration | RAM | VRAM | Throughput |
+|---------------|-----|------|------------|
+| CPU only (Q4_K_M) | 16 GB | — | ~5 tokens/s |
+| GPU RTX 3060 (Q4_K_M) | 16 GB | 8 GB | ~40 tokens/s |
+| GPU RTX 3090 (Q5_K_M) | 16 GB | 24 GB | ~60 tokens/s |
+
+### Hardware for Fine-tuning
+
+| GPU | VRAM | Duration (3 epochs) |
+|-----|------|---------------------|
+| NVIDIA A100 40 GB | ~22 GB | ~4–6 hours |
+| 2× RTX 3090 24 GB | ~20 GB/GPU | ~6–8 hours |
+
+**Software** : [Ollama](https://ollama.ai), [LM Studio](https://lmstudio.ai/) (optional)
 
 ---
 
-## Structure du projet
+## Project Structure
 
 ```
 ebios-rm-llm/
-├── CLAUDE.md                    # Contexte principal pour agents IA (OpenCode)
-├── AGENTS.md                    # Navigation rapide par module
-├── Makefile                     # Interface de commandes unifiée
-├── pyproject.toml               # Dépendances et configuration
+├── CLAUDE.md                    # Main context for AI agents (OpenCode)
+├── AGENTS.md                    # Quick navigation by module
+├── Makefile                     # Unified command interface
+├── pyproject.toml               # Dependencies and configuration
 │
-├── corpus/                      # Pipeline corpus (10 000 exemples annotés)
-│   ├── AGENTS.md
-│   ├── scripts/
-│   │   ├── 01_extract_pdf.py    # Extraction documentaire ANSSI
-│   │   ├── 02_generate_synthetics.py
-│   │   ├── 03_generate_counterexamples.py
-│   │   ├── 04_quality_filter.py
-│   │   ├── 05_format_chatml.py
-│   │   ├── 06_stratified_split.py
-│   │   ├── 07_validate_corpus.py
-│   │   └── schema.py            # ◆ Source de vérité du schéma corpus
+├── corpus/                      # Corpus pipeline (~10,000 annotated examples)
+│   ├── scripts/                 # 01_extract_pdf.py → 07_validate_corpus.py
+│   ├── scripts/schema.py        # ◆ Corpus schema source of truth
 │   └── datasets/                # train.jsonl · validation.jsonl · test.jsonl
 │
-├── finetuning/                  # Pipeline QLoRA + export GGUF
-│   ├── AGENTS.md
+├── finetuning/                  # QLoRA pipeline + GGUF export
 │   ├── configs/                 # lora_config.yaml · training_args.yaml
-│   └── scripts/
-│       ├── train_unsloth.py
-│       ├── merge_lora.py
-│       └── quantize_gguf.py
+│   └── scripts/                # train_unsloth.py · merge_lora.py · quantize_gguf.py
 │
-├── evaluation/                  # Benchmark méthodologique EBIOS RM
-│   ├── AGENTS.md
-│   ├── benchmarks/
-│   │   ├── ebios_rules.py       # ◆ Source de vérité des règles EBIOS
-│   │   └── atelier_checks.py    # Vérifications spécifiques par atelier
-│   ├── scripts/                 # Scoring automatique + génération rapport
-│   └── testsets/                # 500 cas de test par atelier (A1→A5)
+├── evaluation/                  # EBIOS RM methodological benchmark
+│   ├── benchmarks/              # ◆ ebios_rules.py · atelier_checks.py
+│   ├── scripts/                 # Automatic scoring + report generation
+│   └── testsets/                # 500 test cases per workshop (A1→A5)
 │
-├── rag/                         # Index ChromaDB + pipeline embeddings
-│   ├── AGENTS.md
+├── rag/                         # ChromaDB index + embeddings pipeline
 │   └── scripts/                 # build_index.py · test_retrieval.py
 │
-├── prompts/                     # Templates hiérarchiques par atelier
-│   ├── AGENTS.md
+├── prompts/                     # Hierarchical templates per workshop
 │   ├── system/                  # system_prompt.py
-│   ├── ateliers/                # A1_cadrage.py → A5_traitement.py
+│   ├── ateliers/               # A1_cadrage.py → A5_traitement.py
 │   └── validation/              # guard_prompt.py
 │
-├── inference/                   # Configs Ollama + LM Studio
-│   ├── AGENTS.md
-│   ├── modelfiles/Modelfile.ebios
+├── inference/                   # Ollama + LM Studio configs
+│   ├── modelfiles/              # Modelfile.ebios
 │   └── configs/                 # lm_studio_config.json · inference_params.yaml
 │
-├── orchestration/               # LangChain chains + mémoire session
-│   ├── AGENTS.md
+├── orchestration/               # LangChain chains + session memory
 │   ├── chains/                  # rag_chain.py · validation_chain.py
 │   ├── memory/                  # session_memory.py · atelier_context.py
 │   └── routers/                 # atelier_router.py · step_router.py
 │
-├── app/                         # FastAPI + Streamlit (optionnel)
-│   ├── AGENTS.md
+├── app/                         # FastAPI + Streamlit (optional)
 │   ├── api/                     # routes.py · models.py · dependencies.py
 │   └── ui/                      # streamlit_app.py
 │
-├── compliance/                  # Traçabilité qualification ANSSI
-│   ├── AGENTS.md
+├── compliance/                  # ANSSI qualification traceability
 │   ├── matrices/
-│   │   ├── anssi_requirements.py  # ◆ 128 exigences officielles ANSSI
-│   │   └── compliance_matrix.py   # Matrice de couverture par module
+│   │   ├── anssi_requirements.py # ◆ 128 official ANSSI requirements
+│   │   └── compliance_matrix.py # Coverage matrix by module
 │   └── scripts/
 │       └── run_compliance_check.py
 │
-└── tests/                       # Unit · Intégration · E2E
-    ├── AGENTS.md
+└── tests/                       # Unit · Integration · E2E
     ├── unit/
     ├── integration/
     └── e2e/
@@ -202,272 +187,249 @@ ebios-rm-llm/
 
 ---
 
-## Démarrage rapide
-
-### Prérequis
-
-- Python 3.10 ou supérieur
-- [Ollama](https://ollama.ai) installé et en cours d'exécution
-- 8 Go de RAM minimum (16 Go recommandés pour le mode CPU)
-- GPU NVIDIA optionnel (RTX 3060+ avec 8 Go VRAM pour de meilleures performances)
-
-### Installation
+## Installation
 
 ```bash
-# 1. Cloner le dépôt
-git clone https://github.com/[votre-username]/ebios-rm-llm.git
+# Clone the repository
+git clone https://github.com/[your-username]/ebios-rm-llm.git
 cd ebios-rm-llm
 
-# 2. Installer l'environnement
+# Install environment
 make setup
 
-# 3. Télécharger les modèles Ollama nécessaires
-ollama pull nomic-embed-text    # Modèle d'embedding (RAG)
-# Le modèle Mistral fine-tuné sera disponible prochainement
+# Download Ollama models
+ollama pull nomic-embed-text
 
-# 4. Vérifier que tout fonctionne
+# Verify installation
 make health
 ```
 
-### Utilisation avec LM Studio (livrable principal)
+---
 
-1. Télécharger [LM Studio](https://lmstudio.ai/) (version 0.3+)
-2. Charger le fichier `finetuning/output/mistral-7b-ebios-rm-q4_k_m.gguf` *(disponible prochainement)*
-3. Importer la configuration `inference/configs/lm_studio_config.json`
-4. Démarrer une conversation avec le prompt d'atelier correspondant à votre besoin
+## Usage
 
-### Utilisation via l'API locale
+### LM Studio Interface (recommended)
+
+1. Download [LM Studio](https://lmstudio.ai/) (version 0.3+)
+2. Load `finetuning/output/mistral-7b-ebios-rm-q4_k_m.gguf`
+3. Import `inference/configs/lm_studio_config.json`
+4. Start a conversation with a workshop prompt
+
+### FastAPI API
 
 ```bash
-# Démarrer l'API FastAPI
+# Start the API
 make serve
 
-# Exemple de requête — Atelier 1 : génération de valeurs métier
+# Example — Workshop A1: business values generation
 curl -X POST http://localhost:8000/api/atelier/A1 \
   -H "Content-Type: application/json" \
   -d '{
-    "organisation": "Hôpital universitaire, 3 000 lits",
-    "secteur": "sante",
+    "organisation": "University hospital, 3,000 beds",
+    "secteur": "health",
     "etape": "B",
-    "contexte": "SI de gestion des patients (DPI), interconnecté avec les laboratoires et la pharmacie"
+    "contexte": "Patient management IS (EHR)"
   }'
 ```
 
----
-
-## Commandes Make disponibles
+### Make Commands
 
 ```bash
-# Environnement
-make setup              # Installe l'environnement complet (venv + dépendances)
-make health             # Vérifie que tous les services sont opérationnels
+# Environment
+make setup              # Install complete environment (venv + dependencies)
+make health             # Verify all services are operational
 
-# Pipeline corpus
-make build-corpus       # Exécute les 7 étapes du pipeline corpus
-# → Livrable : corpus/datasets/train.jsonl (~9 000 exemples)
+# Corpus pipeline
+make build-corpus       # Execute 7-step corpus pipeline
+# → Deliverable: corpus/datasets/train.jsonl (~9,000 examples)
 
-# Fine-tuning (GPU requis)
-make train              # Lance le fine-tuning QLoRA (Unsloth)
+# Fine-tuning (GPU required)
+make train              # Launch QLoRA fine-tuning (Unsloth)
 make train-llamafactory # Alternative via LLaMA-Factory
-make merge-export       # Fusionne les poids LoRA + exporte GGUF Q4_K_M
+make merge-export       # Merge LoRA weights + export GGUF Q4_K_M
 
-# Évaluation
-make evaluate           # Benchmark EBIOS RM complet (500 cas/atelier)
-# → Livrable : evaluation/reports/validation_methodologique.pdf
+# Evaluation
+make evaluate           # Complete EBIOS RM benchmark (500 cases/ workshop)
+# → Deliverable: evaluation/reports/validation_methodologique.pdf
 
 # RAG
-make build-rag          # Construit l'index ChromaDB depuis les PDFs ANSSI
-make test-rag           # Vérifie la qualité du retrieval
+make build-rag          # Build ChromaDB index from ANSSI PDFs
+make test-rag           # Verify retrieval quality
 
 # Tests
-make test               # Tous les tests (unit + intégration)
-make test-unit          # Tests unitaires uniquement (pas de GPU)
-make test-e2e           # Tests bout en bout (modèle requis)
+make test               # All tests (unit + integration)
+make test-unit          # Unit tests only (no GPU required)
+make test-e2e           # End-to-end tests (model required)
 
-# Qualification ANSSI
-make compliance-check   # Vérifie la cohérence de la matrice de conformité
-make compliance-stats   # Affiche les statistiques de couverture
-make compliance-report  # Génère le rapport PDF de conformité
+# ANSSI Qualification
+make compliance-check   # Verify compliance matrix consistency
+make compliance-stats   # Display coverage statistics
+make compliance-report  # Generate PDF compliance report
 
 # Application
-make serve              # API FastAPI locale (port 8000)
-make serve-ui           # Interface Streamlit (port 8501)
+make serve              # Local FastAPI API (port 8000)
+make serve-ui           # Streamlit UI (port 8501)
 ```
 
 ---
 
-## Terminologie officielle EBIOS RM 2024
+## Official EBIOS RM 2024 Terminology
 
-Ce projet applique **strictement** la terminologie de la version 2024 du guide ANSSI. Les termes de l'ancienne méthode EBIOS 2010 sont explicitement interdits dans tout le code, les prompts et le corpus.
+This project strictly applies the terminology from the ANSSI 2024 guide version. EBIOS 2010 terms are explicitly prohibited in all code, prompts, and corpus.
 
-| ❌ À ne jamais utiliser | ✅ Terme officiel EBIOS RM 2024 |
-|------------------------|--------------------------------|
-| Biens essentiels | **Valeurs métier** |
-| Actifs | **Biens supports** |
-| Menaces (seul) | **Sources de risque** + **Objectifs visés** |
-| PACS | **Plan de traitement du risque** |
-| Biens essentiels / Actifs critiques | **Valeurs métier** ou **Biens supports** |
+| ❌ Never Use | ✅ Official EBIOS RM 2024 Term |
+|-------------|-------------------------------|
+| Essential assets | **Business values** |
+| Assets | **Support assets** |
+| Threats (alone) | **Risk sources** + **Targeted objectives** |
+| PACS | **Risk treatment plan** |
+| Essential/Critical assets | **Business values** or **Support assets** |
 
-Les **échelles de cotation officielles** sont également implémentées :
+**Official rating scales** are also implemented:
 
-- **Gravité** : G1 (Mineure) · G2 (Significative) · G3 (Grave) · G4 (Critique)
-- **Vraisemblance** : V1 (Peu vraisemblable) · V2 (Vraisemblable) · V3 (Très vraisemblable) · V4 (Quasi-certain)
-- **Dangerosité PP** : (Dépendance × Pénétration) / (Maturité SSI × Confiance)
+- **Severity** : G1 (Minor) · G2 (Significant) · G3 (Serious) · G4 (Critical)
+- **Likelihood** : V1 (Unlikely) · V2 (Likely) · V3 (Very likely) · V4 (Almost certain)
+- **Stakeholder dangerousness PP** : (Dependence × Penetration) / (Security Maturity × Trust)
 
 ---
 
-## Qualification ANSSI
+## ANSSI Qualification
 
-Ce projet vise la qualification des outils EBIOS RM par l'ANSSI. Les 128 exigences officielles du référentiel de qualification sont intégralement tracées dans le module `compliance/`.
+This project aims for ANSSI qualification of EBIOS RM tools. The 128 official requirements from the ANSSI qualification repository are fully traced in the `compliance/` module.
 
-### État de conformité actuel
+### Current Compliance Status
 
-| Statut | Nombre | Description |
-|--------|--------|-------------|
-| ✅ DONE | 3 | Implémenté et testé |
-| 🟡 IN_PROGRESS | 41 | En cours d'implémentation |
-| ⬜ TODO | 79 | À implémenter |
-| ➖ N/A | 5 | SaaS uniquement (hors scope POC offline) |
-| **Total** | **128** | Exigences ANSSI |
+| Status | Count | Description |
+|--------|-------|-------------|
+| ✅ DONE | 3 | Implemented and tested |
+| 🟡 IN_PROGRESS | 41 | Implementation in progress |
+| ⬜ TODO | 79 | To be implemented |
+| ➖ N/A | 5 | SaaS only (offline POC out of scope) |
+| **Total** | **128** | ANSSI Requirements |
 
-31 exigences **P0 (bloquantes)** sont en cours de traitement en priorité.
+31 **P0 (blocking)** requirements are being addressed as priority.
 
 ```bash
-# Afficher l'état de conformité en temps réel
+# Display real-time compliance status
 make compliance-stats
 ```
 
-La matrice complète est disponible dans [`compliance/matrices/compliance_matrix.py`](compliance/matrices/compliance_matrix.py).
+Full matrix available in [`compliance/matrices/compliance_matrix.py`](compliance/matrices/compliance_matrix.py).
 
 ---
 
-## Données de performance (objectifs POC)
+## Performance Targets (POC)
 
-| Métrique | Seuil minimal | Cible |
-|----------|--------------|-------|
-| Conformité globale EBIOS RM | 75% | **≥ 80%** |
-| Terminologie officielle ANSSI | 90% | **≥ 95%** |
-| Cohérence inter-ateliers A1→A5 | 80% | **≥ 85%** |
-| Hallucinations factuelles | ≤ 10% | **≤ 5%** |
-| Couverture des 5 ateliers | 100% | **100%** |
+| Metric | Minimum Threshold | Target |
+|--------|------------------|--------|
+| Overall EBIOS RM compliance | 75% | **≥ 80%** |
+| Official ANSSI terminology | 90% | **≥ 95%** |
+| Cross-workshop consistency A1→A5 | 80% | **≥ 85%** |
+| Factual hallucinations | ≤ 10% | **≤ 5%** |
+| 5 workshops coverage | 100% | **100%** |
 
-Ces métriques sont mesurées automatiquement via `make evaluate` sur un jeu de 500 cas de test par atelier (holdout, jamais vu pendant l'entraînement).
-
----
-
-## Ressources matérielles requises
-
-### Inférence (usage quotidien)
-
-| Configuration | RAM | VRAM | Débit |
-|---------------|-----|------|-------|
-| CPU uniquement (Q4_K_M) | 16 Go | — | ~5 tokens/s |
-| GPU RTX 3060 (Q4_K_M) | 16 Go | 8 Go | ~40 tokens/s |
-| GPU RTX 3090 (Q5_K_M) | 16 Go | 24 Go | ~60 tokens/s |
-
-### Fine-tuning (phase de développement)
-
-| GPU | VRAM | Durée (3 epochs) | Coût cloud |
-|-----|------|-----------------|------------|
-| NVIDIA A100 40 Go | ~22 Go | ~4–6 heures | ~16€ |
-| 2× RTX 3090 24 Go | ~20 Go/GPU | ~6–8 heures | — |
-| Google Colab Pro (A100) | 40 Go | ~5 heures | ~10€/mois |
+These metrics are automatically measured via `make evaluate` on 500 test cases per workshop (holdout, never seen during training).
 
 ---
 
-## Contribuer
+## Contributing
 
-Les contributions sont bienvenues, en particulier sur les axes suivants :
+Contributions are welcome, particularly on:
 
-### Ce dont le projet a besoin en priorité
-
-- **Exemples de corpus validés** : des paires instruction/réponse EBIOS RM sur des cas réels et anonymisés (tout secteur)
-- **Beta testeurs praticiens** : des analystes EBIOS RM qui veulent tester les 5 ateliers sur leurs propres contextes
-- **Revue terminologique** : vérifier que les prompts et le corpus respectent la terminologie ANSSI 2024
-- **Tests d'intégration** : compléter la couverture de tests sur les modules LangChain
-
-### Comment contribuer
+- **Validated corpus examples** : instruction/response pairs on real anonymized cases (any sector)
+- **Beta tester practitioners** : EBIOS RM analysts to test the 5 workshops on their own contexts
+- **Terminology review** : verify that prompts and corpus comply with ANSSI 2024 terminology
+- **Integration tests** : complete test coverage on LangChain modules
 
 ```bash
 # Fork + clone
-git clone https://github.com/[votre-username]/ebios-rm-llm.git
+git clone https://github.com/[your-username]/ebios-rm-llm.git
 cd ebios-rm-llm
 
-# Créer une branche
-git checkout -b feat/ma-contribution
+# Create a branch
+git checkout -b feat/my-contribution
 
-# Installer en mode développement
+# Install in development mode
 make setup
 
-# Lancer les tests avant de soumettre
+# Run tests before submitting
 make test-unit
 make compliance-check
 
-# Soumettre une Pull Request
+# Submit a Pull Request
 ```
 
-### Conventions de contribution
+### Conventions
 
-1. **Terminologie** : tout texte en français doit utiliser les termes officiels EBIOS RM 2024 (voir tableau ci-dessus). Le script `compliance/scripts/run_compliance_check.py` vérifie automatiquement.
-2. **Tests** : tout nouveau module doit s'accompagner de tests unitaires dans `tests/unit/`.
-3. **Schema** : tout exemple de corpus doit respecter le schéma défini dans `corpus/scripts/schema.py`.
-4. **Format** : `ruff check .` doit passer sans erreur.
-
----
-
-## Feuille de route
-
-| Horizon | Objectif |
-|---------|----------|
-| **M1–M5** | Corpus 10 000 exemples + index RAG ChromaDB complet |
-| **M5–M8** | Fine-tuning v1 + export GGUF + benchmark initial |
-| **M8–M12** | Orchestration LangChain complète + prompts A1-A5 validés |
-| **M12–M15** | API FastAPI + conformité ANSSI P0 (31 exigences) |
-| **M15–M17** | Beta test avec praticiens EBIOS + validation experte |
-| **M18** | Dépôt du dossier de qualification ANSSI |
+1. **Terminology** : all French text must use official EBIOS RM 2024 terms. `compliance/scripts/run_compliance_check.py` automatically verifies this.
+2. **Tests** : every new module must include unit tests in `tests/unit/`.
+3. **Schema** : every corpus example must comply with the schema defined in `corpus/scripts/schema.py`.
+4. **Format** : `ruff check .` must pass without errors.
 
 ---
 
-## Références
+## Roadmap
 
-- [Guide EBIOS Risk Manager — ANSSI (2024)](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
-- [Fiches méthodes EBIOS RM — Le Supplément](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
+| Horizon | Goal |
+|---------|------|
+| **M1–M5** | Corpus 10,000 examples + complete ChromaDB RAG index |
+| **M5–M8** | Fine-tuning v1 + GGUF export + initial benchmark |
+| **M8–M12** | Complete LangChain orchestration + validated A1-A5 prompts |
+| **M12–M15** | FastAPI + ANSSI compliance P0 (31 requirements) |
+| **M15–M17** | Beta testing with practitioners + expert validation |
+| **M18** | Submit ANSSI qualification dossier |
+
+---
+
+## References
+
+- [EBIOS Risk Manager Guide — ANSSI (2024)](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
+- [EBIOS RM Method Sheets — Le Supplément](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/)
 - [Club EBIOS](https://www.club-ebios.org/)
 - [Mistral 7B Instruct v0.3 — HuggingFace](https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3)
-- [Référentiel de qualification des outils EBIOS RM — ANSSI](https://www.ssi.gouv.fr/)
-- [NIS2 — Transposition française](https://www.ssi.gouv.fr/entreprise/reglementation/cybersecurite-des-operateurs/la-directive-nis/)
-- [ISO/IEC 27005:2022 — Gestion des risques liés à la sécurité de l'information](https://www.iso.org/standard/80585.html)
+- [ANSSI EBIOS RM Tools Qualification Repository](https://www.ssi.gouv.fr/)
+- [NIS2 — French transposition](https://www.ssi.gouv.fr/entreprise/reglementation/cybersecurite-des-operateurs/la-directive-nis/)
+- [ISO/IEC 27005:2022 — Information security risk management](https://www.iso.org/standard/80585.html)
 
 ---
 
-## Avertissements
+## What This Project Is Not
 
-**Ce projet est en phase de Proof of Concept (POC).** Il n'est pas encore qualifié par l'ANSSI. Les sorties du modèle doivent systématiquement être revues par un praticien EBIOS RM compétent avant toute utilisation dans le cadre d'une homologation ou d'une analyse de risques formelle.
-
-L'utilisation de ce logiciel ne se substitue pas à une démarche d'homologation de sécurité ni aux certifications décrites sur le site de l'ANSSI.
+- **Not a cybersecurity operational tool** (SIEM, EDR, vulnerability scanner)
+- **Not a substitute for human expertise** : it assists the practitioner, does not replace them
+- **Not yet certified or qualified** : ANSSI qualification process is in progress
+- **Not a SaaS service** : deploys exclusively on-premises (air-gapped by design)
 
 ---
 
-## Licence
+## License
 
-Ce projet est distribué sous licence **Apache 2.0**. Voir le fichier [LICENSE](LICENSE) pour les détails.
+Apache 2.0 — see [LICENSE](LICENSE).
 
-Les documents de référence ANSSI (guide EBIOS RM, fiches méthodes) sont distribués sous **Licence Ouverte / Open Licence Etalab v1** et ne sont pas inclus dans ce dépôt. Ils doivent être téléchargés directement depuis le [site de l'ANSSI](https://www.ssi.gouv.fr/).
+ANSSI reference documents (EBIOS RM guide, method sheets) are distributed under **Open License / Open Licence Etalab v1** and are not included in this repository. They must be downloaded directly from the [ANSSI website](https://www.ssi.gouv.fr/).
 
 ---
 
 ## Contact
 
-Pour toute question sur le projet, les collaborations ou la démarche de qualification ANSSI, ouvrez une [issue GitHub](../../issues) ou contactez-nous via les [Discussions](../../discussions).
+For questions about the project, collaborations, or ANSSI qualification process, open a [GitHub issue](../../issues) or contact us via [Discussions](../../discussions).
 
-Si vous êtes praticien EBIOS RM certifié et souhaitez participer à la validation du modèle, votre contribution est particulièrement précieuse — n'hésitez pas à vous manifester.
+If you are a certified EBIOS RM practitioner and wish to participate in model validation, your contribution is particularly valuable — please reach out.
+
+---
+
+## Disclaimer
+
+**This project is in Proof of Concept (POC) phase.** It is not yet qualified by ANSSI. Model outputs must always be reviewed by a competent EBIOS RM practitioner before any use in homologation or formal risk analysis.
+
+Use of this software does not substitute for a security homologation process or the certifications described on the ANSSI website.
 
 ---
 
 <div align="center">
 
-**LLM EBIOS RM** · Projet open source · Licence Apache 2.0
+**LLM EBIOS RM** · Open source project · Apache 2.0 License
 
-*Construire un assistant IA souverain pour l'analyse de risques numériques en France*
+*Building a sovereign AI assistant for digital risk analysis in France*
 
 </div>
