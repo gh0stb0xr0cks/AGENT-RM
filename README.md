@@ -1,4 +1,4 @@
-# LLM EBIOS RM — AI Assistant for ANSSI Risk Analysis
+# AGENT-RM — AI Assistant for ANSSI Risk Analysis
 
 > **An open source language model specialized in the EBIOS Risk Manager method, deployable 100% offline (air-gapped), compliant with official ANSSI 2024 terminology.**
 
@@ -12,7 +12,7 @@
 
 ## Overview
 
-**LLM EBIOS RM** is an open source AI assistant designed to help cybersecurity analysts and consultants conduct digital risk analyses using the [EBIOS Risk Manager](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/) method published by ANSSI.
+**AGENT-RM** is an open source AI assistant designed to help cybersecurity analysts and consultants conduct digital risk analyses using the [EBIOS Risk Manager](https://www.ssi.gouv.fr/guide/ebios-risk-manager-la-methode/) method published by ANSSI.
 
 It is based on **Mistral 7B Instruct v0.3** fine-tuned on annotated EBIOS RM corpus examples, enhanced with a RAG (Retrieval-Augmented Generation) system indexing official ANSSI documentation. The entire system operates **100% offline** — no data leaves the organization's infrastructure.
 
@@ -428,7 +428,7 @@ Use of this software does not substitute for a security homologation process or 
 
 <div align="center">
 
-**LLM EBIOS RM** · Open source project · Apache 2.0 License
+**AGENT-RM** · Open source project · Apache 2.0 License
 
 *Building a sovereign AI assistant for digital risk analysis in France*
 
