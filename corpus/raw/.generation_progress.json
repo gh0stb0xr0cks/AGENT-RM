@@ -1,0 +1,282 @@
+{
+  "A1_sante": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_defense": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_finance": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_energie": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_transport": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_collectivite": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_industrie": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_education": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_assurance": {
+    "generated": 0,
+    "target": 1
+  },
+  "A1_administration": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_telecom": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_spatial": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_eau": {
+    "generated": 1,
+    "target": 1
+  },
+  "A1_alimentaire": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_sante": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_defense": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_finance": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_energie": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_transport": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_collectivite": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_industrie": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_education": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_assurance": {
+    "generated": 0,
+    "target": 1
+  },
+  "A2_administration": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_telecom": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_spatial": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_eau": {
+    "generated": 1,
+    "target": 1
+  },
+  "A2_alimentaire": {
+    "generated": 1,
+    "target": 1
+  },
+  "A3_sante": {
+    "generated": 4,
+    "target": 4
+  },
+  "A3_defense": {
+    "generated": 3,
+    "target": 4
+  },
+  "A3_finance": {
+    "generated": 1,
+    "target": 4
+  },
+  "A3_energie": {
+    "generated": 2,
+    "target": 4
+  },
+  "A3_transport": {
+    "generated": 2,
+    "target": 4
+  },
+  "A3_collectivite": {
+    "generated": 2,
+    "target": 4
+  },
+  "A3_industrie": {
+    "generated": 3,
+    "target": 4
+  },
+  "A3_education": {
+    "generated": 1,
+    "target": 4
+  },
+  "A3_assurance": {
+    "generated": 3,
+    "target": 4
+  },
+  "A3_administration": {
+    "generated": 4,
+    "target": 4
+  },
+  "A3_telecom": {
+    "generated": 3,
+    "target": 4
+  },
+  "A3_spatial": {
+    "generated": 2,
+    "target": 4
+  },
+  "A3_eau": {
+    "generated": 3,
+    "target": 4
+  },
+  "A3_alimentaire": {
+    "generated": 4,
+    "target": 4
+  },
+  "A4_sante": {
+    "generated": 1,
+    "target": 4
+  },
+  "A4_defense": {
+    "generated": 3,
+    "target": 4
+  },
+  "A4_finance": {
+    "generated": 2,
+    "target": 4
+  },
+  "A4_energie": {
+    "generated": 2,
+    "target": 4
+  },
+  "A4_transport": {
+    "generated": 3,
+    "target": 4
+  },
+  "A4_collectivite": {
+    "generated": 1,
+    "target": 4
+  },
+  "A4_industrie": {
+    "generated": 2,
+    "target": 4
+  },
+  "A4_education": {
+    "generated": 4,
+    "target": 4
+  },
+  "A4_assurance": {
+    "generated": 3,
+    "target": 4
+  },
+  "A4_administration": {
+    "generated": 3,
+    "target": 4
+  },
+  "A4_telecom": {
+    "generated": 2,
+    "target": 4
+  },
+  "A4_spatial": {
+    "generated": 2,
+    "target": 4
+  },
+  "A4_eau": {
+    "generated": 3,
+    "target": 4
+  },
+  "A4_alimentaire": {
+    "generated": 3,
+    "target": 4
+  },
+  "A5_sante": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_defense": {
+    "generated": 1,
+    "target": 2
+  },
+  "A5_finance": {
+    "generated": 0,
+    "target": 2
+  },
+  "A5_energie": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_transport": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_collectivite": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_industrie": {
+    "generated": 1,
+    "target": 2
+  },
+  "A5_education": {
+    "generated": 1,
+    "target": 2
+  },
+  "A5_assurance": {
+    "generated": 1,
+    "target": 2
+  },
+  "A5_administration": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_telecom": {
+    "generated": 1,
+    "target": 2
+  },
+  "A5_spatial": {
+    "generated": 2,
+    "target": 2
+  },
+  "A5_eau": {
+    "generated": 0,
+    "target": 2
+  },
+  "A5_alimentaire": {
+    "generated": 2,
+    "target": 2
+  }
+}

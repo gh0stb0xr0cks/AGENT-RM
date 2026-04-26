@@ -6,9 +6,10 @@ Objectif : produire ~6 000 exemples Q/A annotés couvrant les 5 ateliers
 EBIOS RM × 14 secteurs, avec templates riches et diversité maximale.
 
 Backends supportés :
-  --backend claude   → Anthropic API (bootstrap, nécessite ANTHROPIC_API_KEY)
-  --backend ollama   → Ollama local (air-gapped, production)
-  --backend mistral  → Mistral AI API (nécessite MISTRAL_API_KEY)
+  --backend claude      → Anthropic API (bootstrap, nécessite ANTHROPIC_API_KEY)
+  --backend ollama      → Ollama local (air-gapped, production)
+  --backend mistral     → Mistral AI API (nécessite MISTRAL_API_KEY)
+  --backend openrouter  → OpenRouter API (nécessite OPENROUTER_API_KEY)
 
 Fonctionnalités clés :
   ✓ 8 à 15 templates distincts par atelier (vs 5 dans 02_generate_synthetics.py)
@@ -29,6 +30,9 @@ Usage :
   # Production Ollama (air-gapped)
   python generate_corpus_6k.py --backend ollama --model mistral:7b-instruct
 
+  # OpenRouter (Mixtral 8x7B par défaut)
+  python generate_corpus_6k.py --backend openrouter --workers 3
+
   # Atelier/secteur spécifique
   python generate_corpus_6k.py --backend claude --atelier A3 --secteur sante
 
@@ -40,8 +44,9 @@ Usage :
 
 Prérequis :
   pip install anthropic tqdm requests
-  # Pour Mistral : pip install mistralai
-  # Pour Ollama  : ollama serve (puis ollama pull mistral)
+  # Pour Mistral    : pip install mistralai
+  # Pour Ollama     : ollama serve (puis ollama pull mistral)
+  # Pour OpenRouter : pip install requests (déjà inclus)
 """
 from __future__ import annotations
 
@@ -81,7 +86,7 @@ except ImportError:
     )
 
 # ── Chemins ──────────────────────────────────────────────────────────────────
-ROOT        = Path(__file__).resolve().parent
+ROOT        = Path(__file__).resolve().parents[1]
 OUTPUT_DIR  = ROOT / "raw" / "synthetics"
 PROGRESS_F  = ROOT / "raw" / ".generation_progress.json"
 LOG_FILE    = ROOT / "raw" / "generation.log"
@@ -802,7 +807,17 @@ class LLMBackend:
                 self._req = _req
             except ImportError:
                 sys.exit("pip install requests")
-            self._client = None
+
+        elif self.backend == "openrouter":
+            try:
+                import requests as _req
+                self._req = _req
+            except ImportError:
+                sys.exit("pip install requests")
+            api_key = os.environ.get("OPENROUTER_API_KEY", "")
+            if not api_key:
+                sys.exit("Variable OPENROUTER_API_KEY non définie.")
+            self._openrouter_api_key = api_key
 
     def generate(self, prompt: str, temperature: float = 0.75) -> str:
         """Génère une réponse depuis le backend configuré."""
@@ -812,10 +827,11 @@ class LLMBackend:
             return self._generate_mistral(prompt, temperature)
         elif self.backend == "ollama":
             return self._generate_ollama(prompt, temperature)
+        elif self.backend == "openrouter":
+            return self._generate_openrouter(prompt, temperature)
         raise ValueError(f"Backend inconnu : {self.backend}")
 
     def _generate_claude(self, prompt: str, temperature: float) -> str:
-        import anthropic
         msg = self._client.messages.create(
             model=self.model or "claude-sonnet-4-20250514",
             max_tokens=1200,
@@ -824,6 +840,12 @@ class LLMBackend:
             messages=[{"role": "user", "content": prompt}],
         )
         return msg.content[0].text
+    
+        #content = msg.content[0]
+        #if content.type == "text":
+        #    return content.text
+        #raise ValueError(f"Unexpected content type: {content.type}")
+        
 
     def _generate_mistral(self, prompt: str, temperature: float) -> str:
         response = self._client.chat.complete(
@@ -852,6 +874,32 @@ class LLMBackend:
         )
         resp.raise_for_status()
         return resp.json()["message"]["content"]
+
+    def _generate_openrouter(self, prompt: str, temperature: float) -> str:
+        payload = {
+            "model": self.model or "mistralai/mistral-small-2603",
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user",   "content": prompt},
+            ],
+            "temperature": temperature,
+            "max_tokens": 1200,
+        }
+        resp = self._req.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {self._openrouter_api_key}",
+                "Content-Type": "application/json",
+                "X-Title": "EBIOS RM Corpus Generator",
+            },
+            json=payload,
+            timeout=180,
+        )
+        if not resp.ok:
+            raise RuntimeError(
+                f"OpenRouter HTTP {resp.status_code}: {resp.text}"
+            )
+        return resp.json()["choices"][0]["message"]["content"]
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1164,13 +1212,17 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
-        "--backend", choices=["claude", "ollama", "mistral"],
+        "--backend", choices=["claude", "ollama", "mistral", "openrouter"],
         default="claude",
-        help="Backend LLM (claude|ollama|mistral)",
+        help="Backend LLM (claude|ollama|mistral|openrouter)",
     )
     parser.add_argument(
         "--model", default="",
-        help="Nom du modèle (défaut selon backend : claude-sonnet-4-20250514 | mistral | mistral-large-latest)",
+        help=(
+            "Nom du modèle (défaut selon backend : "
+            "claude-sonnet-4-20250514 | mistral | mistral-large-latest | "
+            "mistralai/mistral-7b-instruct:free)"
+        ),
     )
     parser.add_argument(
         "--ollama-host", default="http://localhost:11434",
@@ -1190,7 +1242,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--workers", type=int, default=1,
-        help="Nombre de threads parallèles (max 5, uniquement pour claude/mistral)",
+        help="Nombre de threads parallèles (max 5, uniquement pour claude/mistral/openrouter)",
     )
     parser.add_argument(
         "--delay", type=float, default=0.8,

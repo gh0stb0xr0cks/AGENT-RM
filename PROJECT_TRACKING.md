@@ -1,6 +1,6 @@
 # PROJECT TRACKING -- LLM EBIOS RM
 
-> Last updated: March 31, 2026
+> Last updated: April 26, 2026
 > Context: solo developer + AI assistance
 
 ---
@@ -14,14 +14,14 @@
 | orchestration/ | 10 | 5 | 5 | 673 | **50%** |
 | evaluation/ | 7 | 2 | 5 | 226 | **29%** |
 | tests/ | 10 | 3 | 7 | 897 | **30%** |
-| corpus/ | 8 | 1 | 7 | 96 | **12%** |
+| corpus/ | 8 | 3 | 5 | 3,187 | **37%** |
 | prompts/ | 11 | 0 | 11 | 0 | **0%** |
 | inference/ | 7 | 0 | 7 | 0 | **0%** |
 | finetuning/ | 9 | 0 | 9 | 0 | **0%** |
 | app/ | 6 | 0 | 6 | 0 | **0%** |
 | scripts/ | 5 | 0 | 5 | 0 | **0%** |
 | docs/ | 6 | 0 | 6 | 0 | **0%** |
-| **TOTAL** | **102** | **23** | **79** | **4,865** | **~25%** |
+| **TOTAL** | **102** | **25** | **77** | **8,056** | **~27%** |
 
 ---
 
@@ -49,17 +49,17 @@ Unblocks entire orchestration -> LLM chain.
 ### LOT 2 -- Corpus Pipeline (~10,000 examples)
 Prerequisite for fine-tuning. Most time-consuming.
 
-| Task | Estimate |
-|------|----------|
-| 01_extract_pdf.py | 1d |
-| 02_generate_synthetics.py (generation via LLM API) | 3d |
-| 03_generate_counterexamples.py | 1.5d |
-| 04_quality_filter.py | 1d |
-| 05_format_chatml.py | 0.5d |
-| 06_stratified_split.py | 0.5d |
-| 07_validate_corpus.py | 1d |
-| Quality iterations (review, correction, regeneration) | 3d |
-| **Subtotal** | **11.5d** |
+| Task | Estimate | Status |
+|------|----------|--------|
+| 01_extract_pdf.py | 1d | **DONE** |
+| 02_generate_synthetics.py (generation via LLM API) | 3d | **DONE** — 4 backends (claude/ollama/mistral/openrouter), ROOT path fixed, 109 examples generated across 70 files |
+| 03_generate_counterexamples.py | 1.5d | stub |
+| 04_quality_filter.py | 1d | stub |
+| 05_format_chatml.py | 0.5d | stub |
+| 06_stratified_split.py | 0.5d | stub |
+| 07_validate_corpus.py | 1d | stub |
+| Quality iterations (review, correction, regeneration) | 3d | IN PROGRESS (109/~6000 examples) |
+| **Subtotal** | **11.5d** | |
 
 ### LOT 3 -- Mistral 7B Fine-tuning
 GPU experimentation. AI assists with code but not runs.
@@ -246,7 +246,7 @@ This is where real time exceeds pure dev time: GPU runs take hours and corpus qu
 
 | Ref | Deliverable | Dependency | Status |
 |-----|-------------|------------|--------|
-| L2 | corpus/datasets/ebios_rm_corpus.jsonl (~10K examples) | LOT 2 | TODO |
+| L2 | corpus/datasets/ebios_rm_corpus.jsonl (~10K examples) | LOT 2 | IN PROGRESS (109 raw examples generated, 5 ateliers × 14 sectors) |
 | L3 | Documented fine-tuning pipeline | LOT 3 | TODO |
 | L4 | mistral-7b-ebios-rm-q4_k_m.gguf | LOT 3 | TODO |
 | L5 | LM Studio configs + workshop prompts | LOT 1 | TODO |
@@ -259,7 +259,7 @@ This is where real time exceeds pure dev time: GPU runs take hours and corpus qu
 | Date | Session | Work performed | Duration |
 |------|---------|----------------|----------|
 | 2026-03-31 | #1 | Complete RAG module: embedding_config aligned with AGENTS.md, shared OpenRouterEmbeddings, token-aware chunker, build_index (PDF+CSV+JSONL), add_documents, test_retrieval, formatting.py, AtelierContext, session_memory, chunk_formatter, 69 tests (unit+integration), compliance matrix updated, Makefile fixed | ~3h |
-| | | | |
+| 2026-04-26 | #2 | **corpus/**: Added OpenRouter as 4th generation backend to `02_generate_synthetics.py` (OPENROUTER_API_KEY, `_generate_openrouter()`, default model `mistralai/mistral-small-2603`). Fixed ROOT path bug (`parent` → `parents[1]`) so OUTPUT_DIR now correctly resolves to `corpus/raw/synthetics/`. Ran first generation pass: 109 examples produced across 70 JSONL files (A1-A5 × 14 sectors); A1 and A2 single-example targets mostly complete, A3-A5 multi-example targets partial. | ~2h |
 
 ---
 

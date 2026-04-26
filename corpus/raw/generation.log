@@ -1,0 +1,351 @@
+2026-04-26 16:15:16,335 INFO      [A1/sante] 0 existants → génération de 18
+2026-04-26 16:15:16,645 WARNING     [A1/sante] tentative 1/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 0.8s
+2026-04-26 16:15:17,612 WARNING     [A1/sante] tentative 2/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 1.6s
+2026-04-26 16:15:19,374 WARNING     [A1/sante] tentative 3/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 3.2s
+2026-04-26 16:18:53,606 INFO      [A1/sante] 0 existants → génération de 18
+2026-04-26 16:18:53,904 WARNING     [A1/sante] tentative 1/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 0.8s
+2026-04-26 16:18:54,845 WARNING     [A1/sante] tentative 2/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 1.6s
+2026-04-26 16:18:56,639 WARNING     [A1/sante] tentative 3/3 échouée : 404 Client Error: Not Found for url: https://openrouter.ai/api/v1/chat/completions — attente 3.2s
+2026-04-26 16:26:44,543 INFO      [A1/sante] 0 existants → génération de 1
+2026-04-26 16:26:44,876 WARNING     [A1/sante] tentative 1/3 échouée : OpenRouter HTTP 404: {"error":{"message":"No endpoints found for mistralai/mistral-7b-instruct:free.","code":404},"user_id":"user_33FzdpalcuF44gVDlaFC6RKYvX9"} — attente 0.8s
+2026-04-26 16:26:45,835 WARNING     [A1/sante] tentative 2/3 échouée : OpenRouter HTTP 404: {"error":{"message":"No endpoints found for mistralai/mistral-7b-instruct:free.","code":404},"user_id":"user_33FzdpalcuF44gVDlaFC6RKYvX9"} — attente 1.6s
+2026-04-26 16:26:48,155 WARNING     [A1/sante] tentative 3/3 échouée : OpenRouter HTTP 404: {"error":{"message":"No endpoints found for mistralai/mistral-7b-instruct:free.","code":404},"user_id":"user_33FzdpalcuF44gVDlaFC6RKYvX9"} — attente 3.2s
+2026-04-26 16:31:31,594 INFO      [A1/sante] 0 existants → génération de 1
+2026-04-26 16:31:38,214 INFO      [A1/sante] +1 → 1/1
+2026-04-26 16:31:38,215 INFO      [A1/defense] 0 existants → génération de 1
+2026-04-26 16:31:44,550 WARNING     [A1/defense] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:31:44,553 INFO      [A1/defense] +1 → 1/1
+2026-04-26 16:31:44,554 INFO      [A1/finance] 0 existants → génération de 1
+2026-04-26 16:31:51,257 INFO      [A1/finance] +1 → 1/1
+2026-04-26 16:31:51,258 INFO      [A1/energie] 0 existants → génération de 1
+2026-04-26 16:31:59,298 WARNING     [A1/energie] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:31:59,300 INFO      [A1/energie] +1 → 1/1
+2026-04-26 16:31:59,302 INFO      [A1/transport] 0 existants → génération de 1
+2026-04-26 16:32:07,981 INFO      [A1/transport] +1 → 1/1
+2026-04-26 16:32:07,983 INFO      [A1/collectivite] 0 existants → génération de 1
+2026-04-26 16:32:16,700 WARNING     [A1/collectivite] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:32:16,702 INFO      [A1/collectivite] +1 → 1/1
+2026-04-26 16:32:16,703 INFO      [A1/industrie] 0 existants → génération de 1
+2026-04-26 16:32:25,706 INFO      [A1/industrie] +1 → 1/1
+2026-04-26 16:32:25,708 INFO      [A1/education] 0 existants → génération de 1
+2026-04-26 16:32:33,521 WARNING     [A1/education] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:32:33,523 INFO      [A1/education] +1 → 1/1
+2026-04-26 16:32:33,525 INFO      [A1/assurance] 0 existants → génération de 1
+2026-04-26 16:32:41,275 WARNING     [A1/assurance] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:criticité']
+2026-04-26 16:32:41,276 WARNING     [A1/assurance] exemple rejeté inline
+2026-04-26 16:32:41,277 INFO      [A1/assurance] +0 → 0/1
+2026-04-26 16:32:41,278 INFO      [A1/administration] 0 existants → génération de 1
+2026-04-26 16:32:50,536 INFO      [A1/administration] +1 → 1/1
+2026-04-26 16:32:50,537 INFO      [A1/telecom] 0 existants → génération de 1
+2026-04-26 16:33:00,038 INFO      [A1/telecom] +1 → 1/1
+2026-04-26 16:33:00,040 INFO      [A1/spatial] 0 existants → génération de 1
+2026-04-26 16:33:08,715 INFO      [A1/spatial] +1 → 1/1
+2026-04-26 16:33:08,716 INFO      [A1/eau] 0 existants → génération de 1
+2026-04-26 16:33:16,616 WARNING     [A1/eau] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:33:16,617 INFO      [A1/eau] +1 → 1/1
+2026-04-26 16:33:16,618 INFO      [A1/alimentaire] 0 existants → génération de 1
+2026-04-26 16:33:25,038 WARNING     [A1/alimentaire] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif']
+2026-04-26 16:33:25,039 WARNING     [A1/alimentaire] exemple rejeté inline
+2026-04-26 16:33:25,040 INFO      [A1/alimentaire] +0 → 0/1
+2026-04-26 16:33:25,041 INFO      [A2/sante] 0 existants → génération de 1
+2026-04-26 16:33:34,607 WARNING     [A2/sante] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menace']
+2026-04-26 16:33:34,608 WARNING     [A2/sante] exemple rejeté inline
+2026-04-26 16:33:34,609 INFO      [A2/sante] +0 → 0/1
+2026-04-26 16:33:34,610 INFO      [A2/defense] 0 existants → génération de 1
+2026-04-26 16:33:44,673 WARNING     [A2/defense] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:composants']
+2026-04-26 16:33:44,674 WARNING     [A2/defense] exemple rejeté inline
+2026-04-26 16:33:44,675 INFO      [A2/defense] +0 → 0/1
+2026-04-26 16:33:44,676 INFO      [A2/finance] 0 existants → génération de 1
+2026-04-26 16:33:53,996 WARNING     [A2/finance] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:33:53,998 INFO      [A2/finance] +1 → 1/1
+2026-04-26 16:33:54,000 INFO      [A2/energie] 0 existants → génération de 1
+2026-04-26 16:34:02,691 WARNING     [A2/energie] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menace', 'terme_interdit:probabilité']
+2026-04-26 16:34:02,692 WARNING     [A2/energie] exemple rejeté inline
+2026-04-26 16:34:02,692 INFO      [A2/energie] +0 → 0/1
+2026-04-26 16:34:02,693 INFO      [A2/transport] 0 existants → génération de 1
+2026-04-26 16:34:12,707 WARNING     [A2/transport] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menace']
+2026-04-26 16:34:12,708 WARNING     [A2/transport] exemple rejeté inline
+2026-04-26 16:34:12,709 INFO      [A2/transport] +0 → 0/1
+2026-04-26 16:34:12,710 INFO      [A2/collectivite] 0 existants → génération de 1
+2026-04-26 16:34:20,580 WARNING     [A2/collectivite] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menace', 'terme_interdit:threat']
+2026-04-26 16:34:20,581 WARNING     [A2/collectivite] exemple rejeté inline
+2026-04-26 16:34:20,582 INFO      [A2/collectivite] +0 → 0/1
+2026-04-26 16:34:20,583 INFO      [A2/industrie] 0 existants → génération de 1
+2026-04-26 16:34:30,324 WARNING     [A2/industrie] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:34:30,327 INFO      [A2/industrie] +1 → 1/1
+2026-04-26 16:34:30,328 INFO      [A2/education] 0 existants → génération de 1
+2026-04-26 16:34:36,995 WARNING     [A2/education] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:ressources', 'terme_interdit:threat']
+2026-04-26 16:34:36,995 WARNING     [A2/education] exemple rejeté inline
+2026-04-26 16:34:36,997 INFO      [A2/education] +0 → 0/1
+2026-04-26 16:34:36,998 INFO      [A2/assurance] 0 existants → génération de 1
+2026-04-26 16:34:46,279 WARNING     [A2/assurance] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:threat', 'terme_interdit:probabilité']
+2026-04-26 16:34:46,280 WARNING     [A2/assurance] exemple rejeté inline
+2026-04-26 16:34:46,288 INFO      [A2/assurance] +0 → 0/1
+2026-04-26 16:34:46,289 INFO      [A2/administration] 0 existants → génération de 1
+2026-04-26 16:34:52,736 WARNING     [A2/administration] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:34:52,738 INFO      [A2/administration] +1 → 1/1
+2026-04-26 16:34:52,739 INFO      [A2/telecom] 0 existants → génération de 1
+2026-04-26 16:35:02,305 WARNING     [A2/telecom] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:35:02,307 INFO      [A2/telecom] +1 → 1/1
+2026-04-26 16:35:02,308 INFO      [A2/spatial] 0 existants → génération de 1
+2026-04-26 16:35:12,188 WARNING     [A2/spatial] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:35:12,191 INFO      [A2/spatial] +1 → 1/1
+2026-04-26 16:35:12,193 INFO      [A2/eau] 0 existants → génération de 1
+2026-04-26 16:35:20,427 WARNING     [A2/eau] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:35:20,430 INFO      [A2/eau] +1 → 1/1
+2026-04-26 16:35:20,431 INFO      [A2/alimentaire] 0 existants → génération de 1
+2026-04-26 16:35:39,123 WARNING     [A2/alimentaire] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:35:39,125 INFO      [A2/alimentaire] +1 → 1/1
+2026-04-26 16:35:39,126 INFO      [A3/sante] 0 existants → génération de 4
+2026-04-26 16:35:46,620 WARNING     [A3/sante] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:35:58,648 WARNING     [A3/sante] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:36:08,591 WARNING     [A3/sante] problème(s) détecté(s) : ['cotation_gv_absente']
+2026-04-26 16:36:18,681 WARNING     [A3/sante] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:36:18,684 INFO      [A3/sante] +4 → 4/4
+2026-04-26 16:36:18,685 INFO      [A3/defense] 0 existants → génération de 4
+2026-04-26 16:36:28,337 WARNING     [A3/defense] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:36:39,168 WARNING     [A3/defense] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:36:39,169 WARNING     [A3/defense] exemple rejeté inline
+2026-04-26 16:36:46,627 WARNING     [A3/defense] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:36:57,062 WARNING     [A3/defense] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:36:57,065 INFO      [A3/defense] +3 → 3/4
+2026-04-26 16:36:57,066 INFO      [A3/finance] 0 existants → génération de 4
+2026-04-26 16:37:02,430 WARNING     [A3/finance] problème(s) détecté(s) : ['terme_interdit:menace', 'terme_interdit:threat', 'terme_interdit:criticité']
+2026-04-26 16:37:02,430 WARNING     [A3/finance] exemple rejeté inline
+2026-04-26 16:37:12,073 WARNING     [A3/finance] problème(s) détecté(s) : ['terme_interdit:threat', 'terme_interdit:attaquant']
+2026-04-26 16:37:12,074 WARNING     [A3/finance] exemple rejeté inline
+2026-04-26 16:37:20,812 WARNING     [A3/finance] problème(s) détecté(s) : ['cotation_gv_absente']
+2026-04-26 16:37:33,789 WARNING     [A3/finance] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:37:33,789 WARNING     [A3/finance] exemple rejeté inline
+2026-04-26 16:37:33,791 INFO      [A3/finance] +1 → 1/4
+2026-04-26 16:37:33,791 INFO      [A3/energie] 0 existants → génération de 4
+2026-04-26 16:37:43,461 WARNING     [A3/energie] problème(s) détecté(s) : ['terme_interdit:menace', 'terme_interdit:criticité']
+2026-04-26 16:37:43,462 WARNING     [A3/energie] exemple rejeté inline
+2026-04-26 16:38:02,647 WARNING     [A3/energie] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:38:02,647 WARNING     [A3/energie] exemple rejeté inline
+2026-04-26 16:38:13,348 WARNING     [A3/energie] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:38:13,350 INFO      [A3/energie] +2 → 2/4
+2026-04-26 16:38:13,351 INFO      [A3/transport] 0 existants → génération de 4
+2026-04-26 16:38:23,404 WARNING     [A3/transport] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:38:23,405 WARNING     [A3/transport] exemple rejeté inline
+2026-04-26 16:38:32,681 WARNING     [A3/transport] problème(s) détecté(s) : ['terme_interdit:threat', 'cotation_gv_absente']
+2026-04-26 16:38:32,681 WARNING     [A3/transport] exemple rejeté inline
+2026-04-26 16:38:40,244 WARNING     [A3/transport] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:38:48,702 WARNING     [A3/transport] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:38:48,704 INFO      [A3/transport] +2 → 2/4
+2026-04-26 16:38:48,705 INFO      [A3/collectivite] 0 existants → génération de 4
+2026-04-26 16:38:57,809 WARNING     [A3/collectivite] problème(s) détecté(s) : ['terme_interdit:menaces', 'terme_interdit:menace']
+2026-04-26 16:38:57,809 WARNING     [A3/collectivite] exemple rejeté inline
+2026-04-26 16:39:15,397 WARNING     [A3/collectivite] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:39:15,398 WARNING     [A3/collectivite] exemple rejeté inline
+2026-04-26 16:39:26,535 WARNING     [A3/collectivite] problème(s) détecté(s) : ['cotation_gv_absente']
+2026-04-26 16:39:26,538 INFO      [A3/collectivite] +2 → 2/4
+2026-04-26 16:39:26,539 INFO      [A3/industrie] 0 existants → génération de 4
+2026-04-26 16:39:36,139 WARNING     [A3/industrie] problème(s) détecté(s) : ['terme_interdit:menace']
+2026-04-26 16:40:06,422 WARNING     [A3/industrie] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:40:06,422 WARNING     [A3/industrie] exemple rejeté inline
+2026-04-26 16:40:06,424 INFO      [A3/industrie] +3 → 3/4
+2026-04-26 16:40:06,425 INFO      [A3/education] 0 existants → génération de 4
+2026-04-26 16:40:13,368 WARNING     [A3/education] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menace']
+2026-04-26 16:40:13,368 WARNING     [A3/education] exemple rejeté inline
+2026-04-26 16:40:23,023 WARNING     [A3/education] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:40:32,781 WARNING     [A3/education] problème(s) détecté(s) : ['terme_interdit:ressources', 'cotation_gv_absente']
+2026-04-26 16:40:32,782 WARNING     [A3/education] exemple rejeté inline
+2026-04-26 16:40:43,160 WARNING     [A3/education] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:40:43,161 WARNING     [A3/education] exemple rejeté inline
+2026-04-26 16:40:43,165 INFO      [A3/education] +1 → 1/4
+2026-04-26 16:40:43,167 INFO      [A3/assurance] 0 existants → génération de 4
+2026-04-26 16:40:52,522 WARNING     [A3/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:probabilité']
+2026-04-26 16:40:52,523 WARNING     [A3/assurance] exemple rejeté inline
+2026-04-26 16:41:02,171 WARNING     [A3/assurance] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:41:22,488 WARNING     [A3/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:41:22,490 INFO      [A3/assurance] +3 → 3/4
+2026-04-26 16:41:22,491 INFO      [A3/administration] 0 existants → génération de 4
+2026-04-26 16:41:31,176 WARNING     [A3/administration] problème(s) détecté(s) : ['terme_interdit:menace']
+2026-04-26 16:41:42,639 WARNING     [A3/administration] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:41:49,951 WARNING     [A3/administration] problème(s) détecté(s) : ['cotation_gv_absente']
+2026-04-26 16:42:00,925 WARNING     [A3/administration] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:42:00,927 INFO      [A3/administration] +4 → 4/4
+2026-04-26 16:42:00,928 INFO      [A3/telecom] 0 existants → génération de 4
+2026-04-26 16:42:10,678 WARNING     [A3/telecom] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif']
+2026-04-26 16:42:10,679 WARNING     [A3/telecom] exemple rejeté inline
+2026-04-26 16:42:41,014 WARNING     [A3/telecom] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:42:41,016 INFO      [A3/telecom] +3 → 3/4
+2026-04-26 16:42:41,018 INFO      [A3/spatial] 0 existants → génération de 4
+2026-04-26 16:42:48,725 WARNING     [A3/spatial] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:42:59,965 WARNING     [A3/spatial] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:42:59,965 WARNING     [A3/spatial] exemple rejeté inline
+2026-04-26 16:43:10,063 WARNING     [A3/spatial] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:43:10,064 WARNING     [A3/spatial] exemple rejeté inline
+2026-04-26 16:43:20,502 INFO      [A3/spatial] +2 → 2/4
+2026-04-26 16:43:20,503 INFO      [A3/eau] 0 existants → génération de 4
+2026-04-26 16:43:28,136 WARNING     [A3/eau] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:43:28,136 WARNING     [A3/eau] exemple rejeté inline
+2026-04-26 16:43:37,679 WARNING     [A3/eau] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:43:48,194 WARNING     [A3/eau] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:43:55,405 INFO      [A3/eau] +3 → 3/4
+2026-04-26 16:43:55,407 INFO      [A3/alimentaire] 0 existants → génération de 4
+2026-04-26 16:44:06,201 WARNING     [A3/alimentaire] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:44:27,224 WARNING     [A3/alimentaire] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:44:37,600 INFO      [A3/alimentaire] +4 → 4/4
+2026-04-26 16:44:37,602 INFO      [A4/sante] 0 existants → génération de 4
+2026-04-26 16:44:48,003 WARNING     [A4/sante] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:44:48,004 WARNING     [A4/sante] exemple rejeté inline
+2026-04-26 16:45:09,797 WARNING     [A4/sante] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:45:09,798 WARNING     [A4/sante] exemple rejeté inline
+2026-04-26 16:45:19,490 WARNING     [A4/sante] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:threat', 'terme_interdit:attaquant']
+2026-04-26 16:45:19,491 WARNING     [A4/sante] exemple rejeté inline
+2026-04-26 16:45:19,493 INFO      [A4/sante] +1 → 1/4
+2026-04-26 16:45:19,494 INFO      [A4/defense] 0 existants → génération de 4
+2026-04-26 16:45:29,252 WARNING     [A4/defense] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:45:40,395 WARNING     [A4/defense] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:45:48,142 WARNING     [A4/defense] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:45:58,631 WARNING     [A4/defense] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:45:58,631 WARNING     [A4/defense] exemple rejeté inline
+2026-04-26 16:45:58,634 INFO      [A4/defense] +3 → 3/4
+2026-04-26 16:45:58,636 INFO      [A4/finance] 0 existants → génération de 4
+2026-04-26 16:46:07,916 WARNING     [A4/finance] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:46:07,917 WARNING     [A4/finance] exemple rejeté inline
+2026-04-26 16:46:18,109 WARNING     [A4/finance] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:46:29,650 WARNING     [A4/finance] problème(s) détecté(s) : ['terme_interdit:actif', 'terme_interdit:ressources', 'terme_interdit:attaquant']
+2026-04-26 16:46:29,651 WARNING     [A4/finance] exemple rejeté inline
+2026-04-26 16:46:37,046 INFO      [A4/finance] +2 → 2/4
+2026-04-26 16:46:37,048 INFO      [A4/energie] 0 existants → génération de 4
+2026-04-26 16:46:46,490 WARNING     [A4/energie] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:46:56,214 WARNING     [A4/energie] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:46:56,215 WARNING     [A4/energie] exemple rejeté inline
+2026-04-26 16:47:02,657 WARNING     [A4/energie] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:47:13,698 WARNING     [A4/energie] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:composants', 'terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:47:13,698 WARNING     [A4/energie] exemple rejeté inline
+2026-04-26 16:47:13,701 INFO      [A4/energie] +2 → 2/4
+2026-04-26 16:47:13,702 INFO      [A4/transport] 0 existants → génération de 4
+2026-04-26 16:47:23,944 WARNING     [A4/transport] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:47:34,922 WARNING     [A4/transport] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:47:44,807 WARNING     [A4/transport] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:47:44,808 WARNING     [A4/transport] exemple rejeté inline
+2026-04-26 16:47:54,400 WARNING     [A4/transport] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:47:54,403 INFO      [A4/transport] +3 → 3/4
+2026-04-26 16:47:54,404 INFO      [A4/collectivite] 0 existants → génération de 4
+2026-04-26 16:48:03,589 WARNING     [A4/collectivite] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:48:03,589 WARNING     [A4/collectivite] exemple rejeté inline
+2026-04-26 16:48:10,048 WARNING     [A4/collectivite] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:48:10,048 WARNING     [A4/collectivite] exemple rejeté inline
+2026-04-26 16:48:15,663 WARNING     [A4/collectivite] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:48:15,663 WARNING     [A4/collectivite] exemple rejeté inline
+2026-04-26 16:48:26,170 WARNING     [A4/collectivite] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:48:26,174 INFO      [A4/collectivite] +1 → 1/4
+2026-04-26 16:48:26,176 INFO      [A4/industrie] 0 existants → génération de 4
+2026-04-26 16:48:35,063 WARNING     [A4/industrie] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:48:45,821 WARNING     [A4/industrie] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:48:56,442 WARNING     [A4/industrie] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:ressources', 'terme_interdit:attaquant']
+2026-04-26 16:48:56,443 WARNING     [A4/industrie] exemple rejeté inline
+2026-04-26 16:49:06,691 WARNING     [A4/industrie] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:composants']
+2026-04-26 16:49:06,692 WARNING     [A4/industrie] exemple rejeté inline
+2026-04-26 16:49:06,693 INFO      [A4/industrie] +2 → 2/4
+2026-04-26 16:49:06,694 INFO      [A4/education] 0 existants → génération de 4
+2026-04-26 16:49:15,782 WARNING     [A4/education] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:49:26,511 WARNING     [A4/education] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:49:36,958 WARNING     [A4/education] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:49:47,261 WARNING     [A4/education] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:49:47,263 INFO      [A4/education] +4 → 4/4
+2026-04-26 16:49:47,265 INFO      [A4/assurance] 0 existants → génération de 4
+2026-04-26 16:49:54,020 WARNING     [A4/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:49:54,022 WARNING     [A4/assurance] exemple rejeté inline
+2026-04-26 16:50:01,694 WARNING     [A4/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:11,960 WARNING     [A4/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:21,907 WARNING     [A4/assurance] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:21,910 INFO      [A4/assurance] +3 → 3/4
+2026-04-26 16:50:21,911 INFO      [A4/administration] 0 existants → génération de 4
+2026-04-26 16:50:30,509 WARNING     [A4/administration] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:50:30,509 WARNING     [A4/administration] exemple rejeté inline
+2026-04-26 16:50:37,824 WARNING     [A4/administration] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:47,852 WARNING     [A4/administration] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:59,061 WARNING     [A4/administration] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:50:59,067 INFO      [A4/administration] +3 → 3/4
+2026-04-26 16:50:59,069 INFO      [A4/telecom] 0 existants → génération de 4
+2026-04-26 16:51:08,130 WARNING     [A4/telecom] problème(s) détecté(s) : ['terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:51:08,130 WARNING     [A4/telecom] exemple rejeté inline
+2026-04-26 16:51:15,718 WARNING     [A4/telecom] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:51:25,363 WARNING     [A4/telecom] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:attaquant']
+2026-04-26 16:51:25,363 WARNING     [A4/telecom] exemple rejeté inline
+2026-04-26 16:51:35,676 WARNING     [A4/telecom] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:51:35,682 INFO      [A4/telecom] +2 → 2/4
+2026-04-26 16:51:35,684 INFO      [A4/spatial] 0 existants → génération de 4
+2026-04-26 16:51:45,096 WARNING     [A4/spatial] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:51:53,875 WARNING     [A4/spatial] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:52:02,894 WARNING     [A4/spatial] problème(s) détecté(s) : ['terme_interdit:attaquant', 'terme_interdit:criticité']
+2026-04-26 16:52:02,895 WARNING     [A4/spatial] exemple rejeté inline
+2026-04-26 16:52:12,734 WARNING     [A4/spatial] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:menace', 'terme_interdit:attaquant']
+2026-04-26 16:52:12,735 WARNING     [A4/spatial] exemple rejeté inline
+2026-04-26 16:52:12,737 INFO      [A4/spatial] +2 → 2/4
+2026-04-26 16:52:12,738 INFO      [A4/eau] 0 existants → génération de 4
+2026-04-26 16:52:22,357 WARNING     [A4/eau] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:52:32,207 WARNING     [A4/eau] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:52:51,174 WARNING     [A4/eau] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:attaquant']
+2026-04-26 16:52:51,174 WARNING     [A4/eau] exemple rejeté inline
+2026-04-26 16:52:51,176 INFO      [A4/eau] +3 → 3/4
+2026-04-26 16:52:51,177 INFO      [A4/alimentaire] 0 existants → génération de 4
+2026-04-26 16:53:01,528 WARNING     [A4/alimentaire] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:53:12,576 WARNING     [A4/alimentaire] problème(s) détecté(s) : ['terme_interdit:actif', 'terme_interdit:attaquant']
+2026-04-26 16:53:12,576 WARNING     [A4/alimentaire] exemple rejeté inline
+2026-04-26 16:53:22,461 WARNING     [A4/alimentaire] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:53:33,583 WARNING     [A4/alimentaire] problème(s) détecté(s) : ['terme_interdit:attaquant']
+2026-04-26 16:53:33,586 INFO      [A4/alimentaire] +3 → 3/4
+2026-04-26 16:53:33,588 INFO      [A5/sante] 0 existants → génération de 2
+2026-04-26 16:53:43,513 WARNING     [A5/sante] problème(s) détecté(s) : ['terme_interdit:criticité']
+2026-04-26 16:53:54,308 WARNING     [A5/sante] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:53:54,310 INFO      [A5/sante] +2 → 2/2
+2026-04-26 16:53:54,311 INFO      [A5/defense] 0 existants → génération de 2
+2026-04-26 16:54:13,751 WARNING     [A5/defense] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:composants', 'terme_interdit:menaces', 'terme_interdit:menace', 'terme_interdit:criticité']
+2026-04-26 16:54:13,751 WARNING     [A5/defense] exemple rejeté inline
+2026-04-26 16:54:13,752 INFO      [A5/defense] +1 → 1/2
+2026-04-26 16:54:13,753 INFO      [A5/finance] 0 existants → génération de 2
+2026-04-26 16:54:22,418 WARNING     [A5/finance] problème(s) détecté(s) : ['terme_interdit:menaces', 'terme_interdit:menace', 'terme_interdit:criticité', 'terme_interdit:probabilité']
+2026-04-26 16:54:22,419 WARNING     [A5/finance] exemple rejeté inline
+2026-04-26 16:54:31,875 WARNING     [A5/finance] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:criticité']
+2026-04-26 16:54:31,876 WARNING     [A5/finance] exemple rejeté inline
+2026-04-26 16:54:31,877 INFO      [A5/finance] +0 → 0/2
+2026-04-26 16:54:31,879 INFO      [A5/energie] 0 existants → génération de 2
+2026-04-26 16:54:51,281 WARNING     [A5/energie] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:54:51,284 INFO      [A5/energie] +2 → 2/2
+2026-04-26 16:54:51,286 INFO      [A5/transport] 0 existants → génération de 2
+2026-04-26 16:55:07,749 WARNING     [A5/transport] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:55:07,751 INFO      [A5/transport] +2 → 2/2
+2026-04-26 16:55:07,753 INFO      [A5/collectivite] 0 existants → génération de 2
+2026-04-26 16:55:14,250 WARNING     [A5/collectivite] problème(s) détecté(s) : ['terme_interdit:ressources']
+2026-04-26 16:55:23,928 WARNING     [A5/collectivite] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:55:23,931 INFO      [A5/collectivite] +2 → 2/2
+2026-04-26 16:55:23,932 INFO      [A5/industrie] 0 existants → génération de 2
+2026-04-26 16:55:32,829 WARNING     [A5/industrie] problème(s) détecté(s) : ['terme_interdit:actif', 'terme_interdit:criticité', 'terme_interdit:probabilité']
+2026-04-26 16:55:32,829 WARNING     [A5/industrie] exemple rejeté inline
+2026-04-26 16:55:42,474 WARNING     [A5/industrie] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:55:42,477 INFO      [A5/industrie] +1 → 1/2
+2026-04-26 16:55:42,478 INFO      [A5/education] 0 existants → génération de 2
+2026-04-26 16:55:50,564 WARNING     [A5/education] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:criticité']
+2026-04-26 16:55:50,565 WARNING     [A5/education] exemple rejeté inline
+2026-04-26 16:55:57,802 WARNING     [A5/education] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:55:57,805 INFO      [A5/education] +1 → 1/2
+2026-04-26 16:55:57,806 INFO      [A5/assurance] 0 existants → génération de 2
+2026-04-26 16:56:14,881 WARNING     [A5/assurance] problème(s) détecté(s) : ['terme_interdit:actifs', 'terme_interdit:actif', 'terme_interdit:ressources', 'terme_interdit:composants']
+2026-04-26 16:56:14,881 WARNING     [A5/assurance] exemple rejeté inline
+2026-04-26 16:56:14,884 INFO      [A5/assurance] +1 → 1/2
+2026-04-26 16:56:14,885 INFO      [A5/administration] 0 existants → génération de 2
+2026-04-26 16:56:30,836 WARNING     [A5/administration] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:56:30,839 INFO      [A5/administration] +2 → 2/2
+2026-04-26 16:56:30,840 INFO      [A5/telecom] 0 existants → génération de 2
+2026-04-26 16:56:39,563 WARNING     [A5/telecom] problème(s) détecté(s) : ['terme_interdit:menace']
+2026-04-26 16:56:50,024 WARNING     [A5/telecom] problème(s) détecté(s) : ['terme_interdit:actif', 'terme_interdit:composants', 'terme_interdit:menace', 'terme_interdit:attaquant', 'cotation_gv_absente']
+2026-04-26 16:56:50,024 WARNING     [A5/telecom] exemple rejeté inline
+2026-04-26 16:56:50,026 INFO      [A5/telecom] +1 → 1/2
+2026-04-26 16:56:50,026 INFO      [A5/spatial] 0 existants → génération de 2
+2026-04-26 16:57:08,340 WARNING     [A5/spatial] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:57:08,344 INFO      [A5/spatial] +2 → 2/2
+2026-04-26 16:57:08,345 INFO      [A5/eau] 0 existants → génération de 2
+2026-04-26 16:57:16,838 WARNING     [A5/eau] problème(s) détecté(s) : ['terme_interdit:ressources', 'terme_interdit:menaces', 'terme_interdit:menace']
+2026-04-26 16:57:16,838 WARNING     [A5/eau] exemple rejeté inline
+2026-04-26 16:57:26,705 WARNING     [A5/eau] problème(s) détecté(s) : ['terme_interdit:composants', 'terme_interdit:menaces', 'terme_interdit:menace']
+2026-04-26 16:57:26,706 WARNING     [A5/eau] exemple rejeté inline
+2026-04-26 16:57:26,708 INFO      [A5/eau] +0 → 0/2
+2026-04-26 16:57:26,708 INFO      [A5/alimentaire] 0 existants → génération de 2
+2026-04-26 16:57:41,186 WARNING     [A5/alimentaire] problème(s) détecté(s) : ['terme_interdit:composants']
+2026-04-26 16:57:41,189 INFO      [A5/alimentaire] +2 → 2/2
