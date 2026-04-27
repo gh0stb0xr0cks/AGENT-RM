@@ -1,0 +1,69 @@
+## [CAMPAIGNS] C0028 — 2015 Ukraine Electric Power Attack
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0028
+**First seen:** 01 December 2015
+**Last seen:** 01 January 2016
+
+[2015 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0028) was a [Sandworm Team](https://attack.mitre.org/groups/G0034) campaign during which they used [BlackEnergy](https://attack.mitre.org/software/S0089) (specifically BlackEnergy3) and [KillDisk](https://attack.mitre.org/software/S0607) to target and disrupt transmission and distribution substations within the Ukrainian power grid. This campaign was the first major public attack conducted against the Ukrainian power grid by Sandworm Team.
+
+## [CAMPAIGNS] C0025 — 2016 Ukraine Electric Power Attack
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0025
+**First seen:** 01 December 2016
+**Last seen:** 01 December 2016
+
+[2016 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0025) was a [Sandworm Team](https://attack.mitre.org/groups/G0034) campaign during which they used [Industroyer](https://attack.mitre.org/software/S0604) malware to target and disrupt distribution substations within the Ukrainian power grid. This campaign was the second major public attack conducted against Ukraine by [Sandworm Team](https://attack.mitre.org/groups/G0034).(Citation: ESET Industroyer)(Citation: Dragos Crashoverride 2018)
+
+## [CAMPAIGNS] C0034 — 2022 Ukraine Electric Power Attack
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0034
+**First seen:** 01 June 2022
+**Last seen:** 01 October 2022
+
+The [2022 Ukraine Electric Power Attack](https://attack.mitre.org/campaigns/C0034) was a [Sandworm Team](https://attack.mitre.org/groups/G0034) campaign that used a combination of GOGETTER, Neo-REGEORG, [CaddyWiper](https://attack.mitre.org/software/S0693), and living of the land (LotL) techniques to gain access to a Ukrainian electric utility to send unauthorized commands from their SCADA system.(Citation: Mandiant-Sandworm-Ukraine-2022)(Citation: Dragos-Sandworm-Ukraine-2022)
+
+## [CAMPAIGNS] C0041 — FrostyGoop Incident
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0041
+**First seen:** 01 January 2024
+**Last seen:** 01 January 2024
+
+[FrostyGoop Incident](https://attack.mitre.org/campaigns/C0041) took place in January 2024 against a municipal district heating company in Ukraine. Following initial access via likely exploitation of external facing services, [FrostyGoop](https://attack.mitre.org/software/S1165) was used to manipulate ENCO control systems via legitimate Modbus commands to impact the delivery of heating services to Ukrainian civilians.(Citation: Dragos FROSTYGOOP 2024)(Citation: Nozomi BUSTLEBERM 2024)
+
+## [CAMPAIGNS] C0020 — Maroochy Water Breach
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0020
+**First seen:** 01 February 2000
+**Last seen:** 01 April 2000
+
+[Maroochy Water Breach](https://attack.mitre.org/campaigns/C0020) was an incident in 2000 where an adversary leveraged the local government’s wastewater control system and stolen engineering equipment to disrupt and eventually release 800,000 liters of raw sewage into the local community.(Citation: Marshall Abrams July 2008)
+
+## [CAMPAIGNS] C0030 — Triton Safety Instrumented System Attack
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0030
+**First seen:** 01 June 2017
+**Last seen:** 01 August 2017
+
+[Triton Safety Instrumented System Attack](https://attack.mitre.org/campaigns/C0030) was a campaign employed by [TEMP.Veles](https://attack.mitre.org/groups/G0088) which leveraged the [Triton](https://attack.mitre.org/software/S1009) malware framework against a petrochemical organization.(Citation: Triton-EENews-2017) The malware and techniques used within this campaign targeted specific Triconex [Safety Controller](https://attack.mitre.org/assets/A0010)s within the environment.(Citation: FireEye TRITON 2018) The incident was eventually discovered due to a safety trip that occurred as a result of an issue in the malware.(Citation: FireEye TRITON 2017)
+
+## [CAMPAIGNS] C0031 — Unitronics Defacement Campaign
+
+**Matrix:** ics-attack-v18.1
+**Sheet:** campaigns
+**URL:** https://attack.mitre.org/campaigns/C0031
+**First seen:** 01 November 2023
+**Last seen:** 01 November 2023
+
+The [Unitronics Defacement Campaign](https://attack.mitre.org/campaigns/C0031) was a collection of intrusions across multiple sectors by the [CyberAv3ngers](https://attack.mitre.org/groups/G1027), where threat actors engaged in a seemingly opportunistic and global targeting and defacement of Unitronics Vision Series [Programmable Logic Controller (PLC)](https://attack.mitre.org/assets/A0003) with [Human-Machine Interface (HMI)](https://attack.mitre.org/assets/A0002). The sectors that these PLCs can be commonly found in are water and wastewater, energy, food and beverage manufacturing, and healthcare. The most notable feature of this attack was the defacement of the PLCs' HMIs.(Citation: CISA AA23-335A IRGC-Affiliated December 2023)(Citation: Frank Bajak and Marc Levy December 2023)

@@ -23,7 +23,10 @@ setup: ## Install complete environment (venv + dependencies)
 	@echo "→ Download nomic-embed-text: ollama pull nomic-embed-text"
 
 # ── Corpus pipeline (Steps 1-2) ────────────────────────
-build-corpus: ## [Steps 1-2] Build complete training corpus
+extract-mitre: ## [Step 0] Extract MITRE ATT&CK xlsx → JSON (feeds 01_extract_pdf.py)
+	$(PY) corpus/scripts/00_extract_mitre_xlsx.py
+
+build-corpus: extract-mitre ## [Steps 0-2] Build complete training corpus
 	$(PY) corpus/scripts/01_extract_pdf.py
 	$(PY) corpus/scripts/02_generate_synthetics.py
 	$(PY) corpus/scripts/03_generate_counterexamples.py

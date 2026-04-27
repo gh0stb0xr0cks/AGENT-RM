@@ -2,11 +2,16 @@
 01_extract_pdf.py — Extraction de texte depuis les sources documentaires officielles.
 
 Sources attendues dans corpus/raw/ :
-  - anssi/   : guides EBIOS RM, référentiel de qualification, fiches pratiques
-  - mitre/   : ATT&CK Enterprise (PDF ou JSON)
+  - anssi/   : guides EBIOS RM, référentiel de qualification, fiches pratiques (PDF)
+  - mitre/   : ATT&CK Enterprise / ICS / Mobile (PDF + JSON par feuille produit
+               par 00_extract_mitre_xlsx.py — tactics, techniques, software,
+               groups, campaigns, mitigations)
 
 Sortie : corpus/raw/anssi/*.txt  et  corpus/raw/mitre/*.txt
-         + corpus/raw/anssi/index.jsonl  (métadonnées par chunk)
+         + corpus/raw/index.jsonl  (métadonnées par chunk)
+
+Pour MITRE, exécuter au préalable :
+  python 00_extract_mitre_xlsx.py    # produit corpus/raw/mitre/*.json
 
 Usage :
   python 01_extract_pdf.py --source anssi
@@ -115,7 +120,6 @@ def process_directory(source_dir: Path, source_label: str) -> list[dict]:
 
     if not pdf_files:
         print(f"  [WARN] Aucun PDF trouvé dans {source_dir}")
-        return []
 
     for pdf_path in pdf_files:
         doc_id = pdf_path.stem.lower().replace(" ", "_")
@@ -138,6 +142,110 @@ def process_directory(source_dir: Path, source_label: str) -> list[dict]:
             print(f"  [ERREUR] {pdf_path.name} : {e}")
 
     return all_chunks
+
+
+# ---------------------------------------------------------------------------
+# MITRE ATT&CK — JSON produit par 00_extract_mitre_xlsx.py
+# ---------------------------------------------------------------------------
+# Champs textuels rendus par feuille (ordre = ordre d'apparition dans le bloc).
+# Les autres champs (stix_id, dates, citations…) sont volontairement ignorés
+# pour garder les chunks denses et utiles à l'atelier 4.
+MITRE_RENDER_FIELDS: dict[str, list[str]] = {
+    "tactics":     ["tactics", "platforms"],
+    "techniques":  ["tactics", "platforms", "is_sub_technique",
+                    "sub_technique_of", "supports_remote", "impact_type"],
+    "software":    ["type", "platforms", "aliases"],
+    "groups":      ["associated_groups"],
+    "campaigns":   ["first_seen", "last_seen", "associated_campaigns"],
+    "mitigations": [],
+}
+
+
+def _format_meta(entry: dict, fields: list[str]) -> str:
+    parts = []
+    for f in fields:
+        v = entry.get(f)
+        if v in (None, "", False):
+            continue
+        label = f.replace("_", " ").capitalize()
+        parts.append(f"**{label}:** {v}")
+    return "\n".join(parts)
+
+
+def render_mitre_entry(entry: dict, sheet: str, matrix: str) -> str:
+    """Rend une entrée MITRE en bloc markdown auto-suffisant pour le chunking."""
+    eid = entry.get("id") or "?"
+    name = entry.get("name") or "(sans nom)"
+    url = entry.get("url") or ""
+    description = entry.get("description") or ""
+
+    header = f"## [{sheet.upper()}] {eid} — {name}"
+    meta_lines = [f"**Matrix:** {matrix}", f"**Sheet:** {sheet}"]
+    if url:
+        meta_lines.append(f"**URL:** {url}")
+
+    extra = _format_meta(entry, MITRE_RENDER_FIELDS.get(sheet, []))
+    if extra:
+        meta_lines.append(extra)
+
+    body = description.strip() if description else "(no description)"
+    return f"{header}\n\n" + "\n".join(meta_lines) + f"\n\n{body}"
+
+
+def process_mitre_json(source_dir: Path, source_label: str) -> list[dict]:
+    """
+    Lit les JSON produits par 00_extract_mitre_xlsx.py
+    (`{matrix}__{sheet}.json`), rend chaque entrée en markdown puis applique
+    le même pipeline clean → chunk que pour les PDF.
+    """
+    chunks: list[dict] = []
+    json_files = sorted(
+        f for f in source_dir.glob("*__*.json")
+        if f.name != "mitre_index.json"
+    )
+    if not json_files:
+        print("  [INFO] Aucun JSON MITRE — exécuter 00_extract_mitre_xlsx.py d'abord")
+        return []
+
+    for jf in json_files:
+        # Convention de nommage : {matrix_stem}__{sheet}.json
+        stem = jf.stem
+        if "__" not in stem:
+            continue
+        matrix, sheet = stem.split("__", 1)
+
+        try:
+            entries = json.loads(jf.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  [ERREUR] {jf.name} : {e}")
+            continue
+
+        if not isinstance(entries, list) or not entries:
+            print(f"  [SKIP] {jf.name} (vide ou format inattendu)")
+            continue
+
+        blocks = [
+            render_mitre_entry(e, sheet=sheet, matrix=matrix)
+            for e in entries if isinstance(e, dict)
+        ]
+        full_text = clean_text("\n\n".join(blocks))
+
+        # Sauvegarde texte brut (auditabilité, identique au flux PDF)
+        txt_out = source_dir / f"{stem}.txt"
+        txt_out.write_text(full_text, encoding="utf-8")
+
+        doc_id = stem.lower().replace(" ", "_")
+        sheet_chunks = chunk_text(full_text, doc_id=doc_id, source=source_label)
+        # Enrichit les métadonnées de chunk pour aiguiller la RAG vers A4
+        for c in sheet_chunks:
+            c["mitre_matrix"] = matrix
+            c["mitre_sheet"] = sheet
+            c["atelier_hint"] = "A4"
+        chunks.extend(sheet_chunks)
+        print(f"  MITRE {matrix}/{sheet:<12} {len(entries):>5} entrées → "
+              f"{len(sheet_chunks)} chunks")
+
+    return chunks
 
 
 def write_index(chunks: list[dict], output_path: Path) -> None:
@@ -168,8 +276,9 @@ def main():
         if not directory.exists():
             print(f"  [WARN] Répertoire inexistant : {directory}")
             continue
-        chunks = process_directory(directory, source_label=label)
-        all_chunks.extend(chunks)
+        all_chunks.extend(process_directory(directory, source_label=label))
+        if label == "mitre":
+            all_chunks.extend(process_mitre_json(directory, source_label=label))
 
     if all_chunks:
         write_index(all_chunks, RAW_DIR / "index.jsonl")

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "target_sheets": [
+    "tactics",
+    "techniques",
+    "software",
+    "groups",
+    "campaigns",
+    "mitigations"
+  ],
+  "matrices": [
+    {
+      "matrix_file": "enterprise-attack-v18.1.xlsx",
+      "matrix_stem": "enterprise-attack-v18.1",
+      "sheets": {
+        "tactics": {
+          "file": "enterprise-attack-v18.1__tactics.json",
+          "count": 14
+        },
+        "techniques": {
+          "file": "enterprise-attack-v18.1__techniques.json",
+          "count": 691
+        },
+        "software": {
+          "file": "enterprise-attack-v18.1__software.json",
+          "count": 784
+        },
+        "groups": {
+          "file": "enterprise-attack-v18.1__groups.json",
+          "count": 172
+        },
+        "campaigns": {
+          "file": "enterprise-attack-v18.1__campaigns.json",
+          "count": 52
+        },
+        "mitigations": {
+          "file": "enterprise-attack-v18.1__mitigations.json",
+          "count": 44
+        }
+      }
+    },
+    {
+      "matrix_file": "ics-attack-v18.1.xlsx",
+      "matrix_stem": "ics-attack-v18.1",
+      "sheets": {
+        "tactics": {
+          "file": "ics-attack-v18.1__tactics.json",
+          "count": 12
+        },
+        "techniques": {
+          "file": "ics-attack-v18.1__techniques.json",
+          "count": 83
+        },
+        "software": {
+          "file": "ics-attack-v18.1__software.json",
+          "count": 23
+        },
+        "groups": {
+          "file": "ics-attack-v18.1__groups.json",
+          "count": 14
+        },
+        "campaigns": {
+          "file": "ics-attack-v18.1__campaigns.json",
+          "count": 7
+        },
+        "mitigations": {
+          "file": "ics-attack-v18.1__mitigations.json",
+          "count": 52
+        }
+      }
+    },
+    {
+      "matrix_file": "mobile-attack-v18.1.xlsx",
+      "matrix_stem": "mobile-attack-v18.1",
+      "sheets": {
+        "tactics": {
+          "file": "mobile-attack-v18.1__tactics.json",
+          "count": 12
+        },
+        "techniques": {
+          "file": "mobile-attack-v18.1__techniques.json",
+          "count": 124
+        },
+        "software": {
+          "file": "mobile-attack-v18.1__software.json",
+          "count": 122
+        },
+        "groups": {
+          "file": "mobile-attack-v18.1__groups.json",
+          "count": 17
+        },
+        "campaigns": {
+          "file": "mobile-attack-v18.1__campaigns.json",
+          "count": 3
+        },
+        "mitigations": {
+          "file": "mobile-attack-v18.1__mitigations.json",
+          "count": 13
+        }
+      }
+    }
+  ]
+}

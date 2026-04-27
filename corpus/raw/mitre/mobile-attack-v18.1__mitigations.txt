@@ -1,0 +1,148 @@
+## [MITIGATIONS] M1058 — Antivirus/Antimalware
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1058
+
+Mobile security products, such as Mobile Threat Defense (MTD), offer various device-based mitigations against certain behaviors.
+
+## [MITIGATIONS] M1013 — Application Developer Guidance
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1013
+
+Application Developer Guidance focuses on providing developers with the knowledge, tools, and best practices needed to write secure code, reduce vulnerabilities, and implement secure design principles. By integrating security throughout the software development lifecycle (SDLC), this mitigation aims to prevent the introduction of exploitable weaknesses in applications, systems, and APIs. This mitigation can be implemented through the following measures:
+ 
+Preventing SQL Injection (Secure Coding Practice):
+
+- Implementation: Train developers to use parameterized queries or prepared statements instead of directly embedding user input into SQL queries.
+- Use Case: A web application accepts user input to search a database. By sanitizing and validating user inputs, developers can prevent attackers from injecting malicious SQL commands.
+
+Cross-Site Scripting (XSS) Mitigation:
+
+- Implementation: Require developers to implement output encoding for all user-generated content displayed on a web page.
+- Use Case: An e-commerce site allows users to leave product reviews. Properly encoding and escaping user inputs prevents malicious scripts from being executed in other users’ browsers.
+
+Secure API Design:
+
+- Implementation: Train developers to authenticate all API endpoints and avoid exposing sensitive information in API responses.
+- Use Case: A mobile banking application uses APIs for account management. By enforcing token-based authentication for every API call, developers reduce the risk of unauthorized access.
+
+Static Code Analysis in the Build Pipeline:
+
+- Implementation: Incorporate tools into CI/CD pipelines to automatically scan for vulnerabilities during the build process.
+- Use Case: A fintech company integrates static analysis tools to detect hardcoded credentials in their source code before deployment.
+
+Threat Modeling in the Design Phase:
+
+- Implementation: Use frameworks like STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) to assess threats during application design.
+- Use Case: Before launching a customer portal, a SaaS company identifies potential abuse cases, such as session hijacking, and designs mitigations like secure session management.
+
+**Tools for Implementation**:
+
+- Static Code Analysis Tools: Use tools that can scan for known vulnerabilities in source code.
+- Dynamic Application Security Testing (DAST): Use tools like Burp Suite or OWASP ZAP to simulate runtime attacks and identify vulnerabilities.
+- Secure Frameworks: Recommend secure-by-default frameworks (e.g., Django for Python, Spring Security for Java) that enforce security best practices.
+
+## [MITIGATIONS] M1002 — Attestation
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1002
+
+Enable remote attestation capabilities when available (such as Android SafetyNet or Samsung Knox TIMA Attestation) and prohibit devices that fail the attestation from accessing enterprise resources.
+
+## [MITIGATIONS] M1010 — Deploy Compromised Device Detection Method
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1010
+
+A variety of methods exist that can be used to enable enterprises to identify compromised (e.g. rooted/jailbroken) devices, whether using security mechanisms built directly into the device, third-party mobile security applications, enterprise mobility management (EMM)/mobile device management (MDM) capabilities, or other methods. Some methods may be trivial to evade while others may be more sophisticated.
+
+## [MITIGATIONS] M1059 — Do Not Mitigate
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1059
+
+This category is to associate techniques that mitigation might increase risk of compromise and therefore mitigation is not recommended.
+
+## [MITIGATIONS] M1009 — Encrypt Network Traffic
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1009
+
+Application developers should encrypt all of their application network traffic using the Transport Layer Security (TLS) protocol to ensure protection of sensitive data and deter network-based attacks. If desired, application developers could perform message-based encryption of data before passing it for TLS encryption.
+
+iOS's App Transport Security feature can be used to help ensure that all application network traffic is appropriately protected. Apple intends to mandate use of App Transport Security (Citation: TechCrunch-ATS) for all apps in the Apple App Store unless appropriate justification is given.
+
+Android's Network Security Configuration feature similarly can be used by app developers to help ensure that all of their application network traffic is appropriately protected (Citation: Android-NetworkSecurityConfig).
+
+Use of Virtual Private Network (VPN) tunnels, e.g. using the IPsec protocol, can help mitigate some types of network attacks as well.
+
+## [MITIGATIONS] M1012 — Enterprise Policy
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1012
+
+An enterprise mobility management (EMM), also known as mobile device management (MDM), system can be used to provision policies to mobile devices to control aspects of their allowed behavior.
+
+## [MITIGATIONS] M1014 — Interconnection Filtering
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1014
+
+In order to mitigate Signaling System 7 (SS7) exploitation, the Communications, Security, Reliability, and Interoperability Council (CSRIC) describes filtering interconnections between network operators to block inappropriate requests (Citation: CSRIC5-WG10-FinalReport).
+
+## [MITIGATIONS] M1003 — Lock Bootloader
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1003
+
+On devices that provide the capability to unlock the bootloader (hence allowing any operating system code to be flashed onto the device), perform periodic checks to ensure that the bootloader is locked.
+
+## [MITIGATIONS] M1001 — Security Updates
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1001
+
+Install security updates in response to discovered vulnerabilities.
+
+Purchase devices with a vendor and/or mobile carrier commitment to provide security updates in a prompt manner for a set period of time.
+
+Decommission devices that will no longer receive security updates.
+
+Limit or block access to enterprise resources from devices that have not installed recent security updates.
+
+On Android devices, access can be controlled based on each device's security patch level. On iOS devices, access can be controlled based on the iOS version.
+
+## [MITIGATIONS] M1004 — System Partition Integrity
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1004
+
+Ensure that Android devices being used include and enable the Verified Boot capability, which cryptographically ensures the integrity of the system partition.
+
+## [MITIGATIONS] M1006 — Use Recent OS Version
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1006
+
+New mobile operating system versions bring not only patches against discovered vulnerabilities but also often bring security architecture improvements that provide resilience against potential vulnerabilities or weaknesses that have not yet been discovered. They may also bring improvements that block use of observed adversary techniques.
+
+## [MITIGATIONS] M1011 — User Guidance
+
+**Matrix:** mobile-attack-v18.1
+**Sheet:** mitigations
+**URL:** https://attack.mitre.org/mitigations/M1011
+
+Describes any guidance or training given to users to set particular configuration settings or avoid specific potentially risky behaviors.
