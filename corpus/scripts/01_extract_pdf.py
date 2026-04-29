@@ -19,6 +19,7 @@ Usage :
   python 01_extract_pdf.py --source all
 """
 from __future__ import annotations
+
 import argparse
 import json
 import re

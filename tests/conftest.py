@@ -4,7 +4,6 @@ Fixtures partagées pour les tests EBIOS RM.
 
 import pytest
 
-
 # ── Exemples EBIOS RM (terminologie 2024 correcte) ──────────────────────────
 
 CORRECT_EBIOS_RESPONSE = """## Atelier 1 — Cadrage et socle de securite

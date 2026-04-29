@@ -3,7 +3,8 @@
 # Main project commands
 # ═══════════════════════════════════════════════════════
 
-.PHONY: help setup build-corpus train merge-export evaluate build-rag test serve clean
+.PHONY: help setup build-corpus train merge-export evaluate build-rag test serve clean \
+        corpus-stats clean-corpus
 
 PYTHON = python3
 VENV = .venv
@@ -26,7 +27,7 @@ setup: ## Install complete environment (venv + dependencies)
 extract-mitre: ## [Step 0] Extract MITRE ATT&CK xlsx → JSON (feeds 01_extract_pdf.py)
 	$(PY) corpus/scripts/00_extract_mitre_xlsx.py
 
-build-corpus: extract-mitre ## [Steps 0-2] Build complete training corpus
+build-corpus: extract-mitre ## [Steps 0-7] Build complete training corpus
 	$(PY) corpus/scripts/01_extract_pdf.py
 	$(PY) corpus/scripts/02_generate_synthetics.py
 	$(PY) corpus/scripts/03_generate_counterexamples.py
@@ -35,6 +36,43 @@ build-corpus: extract-mitre ## [Steps 0-2] Build complete training corpus
 	$(PY) corpus/scripts/06_stratified_split.py
 	$(PY) corpus/scripts/07_validate_corpus.py
 	@echo "✓ Corpus built → corpus/datasets/"
+
+generate: ## [Step 2] Generate synthetic examples (--backend ollama, air-gapped)
+	$(PY) corpus/scripts/02_generate_synthetics.py --backend ollama
+
+generate-bootstrap: ## [Step 2] Generate via Claude API (M2 bootstrap phase)
+	$(PY) corpus/scripts/02_generate_synthetics.py --backend claude
+
+counterexamples: ## [Step 3] Generate counter-examples (ratio 1:6)
+	$(PY) corpus/scripts/03_generate_counterexamples.py
+
+filter: ## [Step 4] Apply quality gates → corpus/processed/filtered.jsonl
+	$(PY) corpus/scripts/04_quality_filter.py
+
+format: ## [Step 5] Format filtered corpus as ChatML → corpus/datasets/filtered_chatml.jsonl
+	$(PY) corpus/scripts/05_format_chatml.py
+
+split: ## [Step 6] Stratified split → train/eval/test.jsonl
+	$(PY) corpus/scripts/06_stratified_split.py
+
+validate: ## [Step 7] Final corpus validation (exit 0 = PASS)
+	$(PY) corpus/scripts/07_validate_corpus.py
+
+validate-strict: ## [Step 7] Validation — exit 1 on any warning
+	$(PY) corpus/scripts/07_validate_corpus.py --strict
+
+corpus-stats: ## Print line counts for all corpus JSONL files
+	@echo "=== Corpus statistics ==="
+	@for f in corpus/raw/synthetics/*.jsonl corpus/processed/*.jsonl corpus/datasets/*.jsonl; do \
+		[ -f "$$f" ] && printf "%-65s %6d lines\n" "$$f" $$(wc -l < "$$f"); \
+	done; true
+
+clean-corpus: ## Delete generated corpus files (keeps raw/anssi and raw/mitre)
+	@echo "Deleting generated corpus files..."
+	rm -f corpus/processed/*.jsonl corpus/processed/*.json
+	rm -f corpus/datasets/*.jsonl  corpus/datasets/*.json
+	@echo "✓ corpus/processed/ and corpus/datasets/ cleared"
+	@echo "  (corpus/raw/anssi/ and corpus/raw/mitre/ preserved)"
 
 # ── Fine-tuning (Step 3) ────────────────────────────────
 train: ## [Step 3] Launch LoRA/QLoRA fine-tuning (GPU required)

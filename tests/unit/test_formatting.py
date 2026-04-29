@@ -9,29 +9,24 @@ Couvre :
 import sys
 from pathlib import Path
 
-import pytest
-
 # Assurer l'accès au projet racine
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from orchestration.utils.formatting import (
-    format_rag_context,
-    format_rag_context_compact,
-    _extract_doc_fields,
-)
 from orchestration.utils.chunk_formatter import (
     format_atelier_output,
-    _extract_sections,
-    _extract_structured_elements,
+)
+from orchestration.utils.formatting import (
+    _extract_doc_fields,
+    format_rag_context,
+    format_rag_context_compact,
 )
 from rag.embeddings.chunker import (
+    _clean_text,
+    _find_split_point,
     chunk_text,
     chunk_text_by_pages,
     estimate_tokens,
-    _clean_text,
-    _find_split_point,
 )
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Tests format_rag_context

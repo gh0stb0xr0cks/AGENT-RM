@@ -1,6 +1,6 @@
 # PROJECT TRACKING -- LLM EBIOS RM
 
-> Last updated: April 27, 2026 (session #4)
+> Last updated: April 29, 2026 (session #5)
 > Context: solo developer + AI assistance
 
 ---
@@ -13,8 +13,8 @@
 | compliance/ | 4 | 3 | 1 | 1,208 | **75%** |
 | orchestration/ | 10 | 5 | 5 | 673 | **50%** |
 | evaluation/ | 7 | 2 | 5 | 226 | **29%** |
-| tests/ | 10 | 3 | 7 | 897 | **30%** |
-| corpus/ | 9 | 4 | 5 | 3,400 | **44%** |
+| tests/ | 14 | 8 | 6 | 1,919 | **57%** |
+| corpus/ | 9 | 9 | 0 | 4,094 | **100%** |
 | prompts/ | 11 | 0 | 11 | 0 | **0%** |
 | inference/ | 7 | 0 | 7 | 0 | **0%** |
 | finetuning/ | 9 | 0 | 9 | 0 | **0%** |
@@ -54,12 +54,12 @@ Prerequisite for fine-tuning. Most time-consuming.
 | 00_extract_mitre_xlsx.py (NEW — MITRE ATT&CK xlsx → JSON) | 0.5d | **DONE** — extracts 6 sheets (tactics, techniques, software, groups, campaigns, mitigations) from 3 matrices (enterprise/ics/mobile v18.1) → 18 JSON files, 2 239 entries, manifest `mitre_index.json` |
 | 01_extract_pdf.py | 1d | **DONE** — extended to consume MITRE JSON: renders each entry as markdown block with `mitre_matrix` / `mitre_sheet` / `atelier_hint:"A4"` chunk metadata. End-to-end run: 1 085 chunks (~823 k tokens) in `corpus/raw/index.jsonl` (136 ANSSI + 949 MITRE) |
 | 02_generate_synthetics.py (generation via LLM API) | 3d | **DONE** — 4 backends (claude/ollama/mistral/openrouter), ROOT path fixed, 109 examples generated across 70 files |
-| 03_generate_counterexamples.py | 1.5d | stub |
-| 04_quality_filter.py | 1d | stub |
-| 05_format_chatml.py | 0.5d | stub |
-| 06_stratified_split.py | 0.5d | stub |
-| 07_validate_corpus.py | 1d | stub |
-| Quality iterations (review, correction, regeneration) | 3d | IN PROGRESS (1,235/~6000 examples — A1 ✓, A2 ✓, A3 ✓, A4 partial, A5 stub) |
+| 03_generate_counterexamples.py | 1.5d | **DONE** — `inject_*` → `mutate_*` rename per spec §4.3; `parent_id`/`mutation_strategy` metadata added; 5th hallucination variant; SCALE_PATTERN imported; `make_id()` used for CE IDs |
+| 04_quality_filter.py | 1d | **DONE** — full 13-gate rewrite: structure, secteur/atelier, word count, forbidden terms, required terms, G/V scale, dedup (SHA256 on question), source_chunk (V1), malformed-question guard; Volet 3 gets gates 1–3+9 only; outputs `filtered.jsonl` + `filter_report.json`; exit 0 iff ≥8 000 |
+| 05_format_chatml.py | 0.5d | **DONE** — output renamed to `filtered_chatml.jsonl`; explicit user/assistant turn building; exact ChatML token sequence verified |
+| 06_stratified_split.py | 0.5d | **DONE** — full rewrite; reads `filtered_chatml.jsonl`; 70-strata invariant via seed-retry loop (≤20 attempts); `split_stats.json` with `by_atelier` + `by_stratum` (70 entries) |
+| 07_validate_corpus.py | 1d | **DONE** — 4 new checks (min counts, stratum coverage, CE rate ≤20%, metadata regression); forbidden-term + G/V checks now scan only user+assistant turns to avoid false positives from system prompt; `validation_report.json` emitted |
+| Quality iterations (review, correction, regeneration) | 3d | IN PROGRESS — A1: 514 ex. (13 sectors); A2–A5 shards deleted pending re-generation with the corrected pipeline (robust JSON parser eliminates the 221-malformed-example root cause) |
 | **Subtotal** | **12d** | |
 
 ### LOT 3 -- Mistral 7B Fine-tuning
@@ -113,11 +113,11 @@ Scoring exists (ebios_rules.py). Remaining: orchestration scripts.
 
 ### LOT 7 -- Tests, Compliance & Documentation
 
-| Task | Estimate |
-|------|----------|
-| Remaining unit tests (5 files) | 2.5d |
-| Remaining integration tests (2 files) | 1.5d |
-| E2E tests (2 files) | 2d |
+| Task | Estimate | Status |
+|------|----------|--------|
+| Remaining unit tests (5 files) | 2.5d | **DONE** — `test_schema.py` (13 cases), `test_mutations.py` (8), `test_chatml_format.py` (6), `test_corpus_quality.py` (11) — 43/43 passing, ruff clean |
+| Remaining integration tests (2 files) | 1.5d | **DONE** — `test_pipeline.py` (5 cases, 210-example micro-corpus fixture) |
+| E2E tests (2 files) | 2d | TODO |
 | ANSSI compliance tests (by EXI category) | 3d |
 | generate_conformity_report.py | 1d |
 | Utility scripts (health, export, download) | 1d |
@@ -247,7 +247,7 @@ This is where real time exceeds pure dev time: GPU runs take hours and corpus qu
 
 | Ref | Deliverable | Dependency | Status |
 |-----|-------------|------------|--------|
-| L2 | corpus/datasets/ebios_rm_corpus.jsonl (~10K examples) | LOT 2 | IN PROGRESS (1,235 raw examples — A1: 251, A2: 237, A3: 659, A4: 69, A5: 19 — A4/A5 need completion) |
+| L2 | corpus/datasets/ebios_rm_corpus.jsonl (~10K examples) | LOT 2 | IN PROGRESS — pipeline scripts fully overhauled and spec-compliant; A1: 514 raw examples (13 sectors); A2–A5 re-generation pending with corrected pipeline; `make build-corpus` will produce train/eval/test once raw shards are rebuilt |
 | L3 | Documented fine-tuning pipeline | LOT 3 | TODO |
 | L4 | mistral-7b-ebios-rm-q4_k_m.gguf | LOT 3 | TODO |
 | L5 | LM Studio configs + workshop prompts | LOT 1 | TODO |
@@ -262,6 +262,7 @@ This is where real time exceeds pure dev time: GPU runs take hours and corpus qu
 | 2026-03-31 | #1 | Complete RAG module: embedding_config aligned with AGENTS.md, shared OpenRouterEmbeddings, token-aware chunker, build_index (PDF+CSV+JSONL), add_documents, test_retrieval, formatting.py, AtelierContext, session_memory, chunk_formatter, 69 tests (unit+integration), compliance matrix updated, Makefile fixed | ~3h |
 | 2026-04-26 | #2 | **corpus/**: Added OpenRouter as 4th generation backend to `02_generate_synthetics.py` (OPENROUTER_API_KEY, `_generate_openrouter()`, default model `mistralai/mistral-small-2603`). Fixed ROOT path bug (`parent` → `parents[1]`) so OUTPUT_DIR now correctly resolves to `corpus/raw/synthetics/`. Ran first generation pass: 109 examples produced across 70 JSONL files (A1-A5 × 14 sectors); A1 and A2 single-example targets mostly complete, A3-A5 multi-example targets partial. | ~2h |
 | 2026-04-27 | #3 | **corpus/**: Ran second full generation pass with `02_generate_synthetics.py`. Total examples grew from 109 → **1,235** across 70 JSONL files. A1 complete (251 ex., ~18/sector, 13/14 at target), A2 complete (237 ex., ~15-20/sector, all sectors populated), A3 largely complete (659 ex., ~44-51/sector, all sectors populated). A4 partial (69 ex., uneven: sante=28, defense=11, others 1-4). A5 stub (19 ex., 0-2/sector). Generation progress tracked in `corpus/raw/.generation_progress.json`. Next: complete A4/A5 generation, then run `03_generate_counterexamples.py`. | ~1.5h |
+| 2026-04-29 | #5 | **corpus/ pipeline — full spec alignment with `corpus/AGENTS.md`:** `schema.py` — `source` Literal reconciled (`anssi_doc` replaces `official_doc`/`anonymized`), 8 A5 themes added to reach ≥26/atelier. `02_generate_synthetics.py` — `make_id()` helper per §4.2, brace-counting `_find_json_object()` replaces brittle regex parser (root cause of 221 malformed examples), complete §3.3 metadata block. `03_generate_counterexamples.py` — `inject_*` → `mutate_*` rename, `parent_id`/`mutation_strategy` metadata, 5th hallucination variant. `04_quality_filter.py` — full 13-gate rewrite with Volet-aware gate skipping, SHA256 dedup on question, malformed-question gate, `filter_report.json` per §4.4 spec. `05_format_chatml.py` — output → `filtered_chatml.jsonl`, exact ChatML token sequence. `06_stratified_split.py` — reads `filtered_chatml.jsonl`, 70-strata seed-retry loop (≤20 attempts), `split_stats.json` with `by_stratum` (70 entries). `07_validate_corpus.py` — 4 new checks (min counts, stratum coverage, CE rate ≤20%, metadata regression), UA-only scan for forbidden terms/G-V scale. **Makefile** — `corpus-stats`, `clean-corpus`, individual step targets (`generate`, `filter`, `split`, `validate`, `validate-strict`). **Tests** — 4 new test files: `test_schema.py` (13 cases), `test_mutations.py` (8), `test_chatml_format.py` (6), `test_corpus_quality.py` (11), `test_pipeline.py` integration (5, 210-ex. micro-corpus); 43/43 passing; ruff: 0 errors. | ~3h |
 | 2026-04-27 | #4 | **docs/**: Rewrote `ARCHITECTURE.md` to match actual repo layout (split `training/` → `finetuning/` + `inference/`; added `evaluation/`, `prompts/`, `data/`, `docs/`, `scripts/`; corrected `compliance/matrices/` and `app/main.py` paths; updated layer/module diagrams, data-flow narrative and compliance owner table; switched workshop→atelier terminology). **corpus/**: Added MITRE ATT&CK ingestion to enrich atelier 4. New script `corpus/scripts/00_extract_mitre_xlsx.py` extracts 6 sheets (tactics, techniques, software, groups, campaigns, mitigations) from each `corpus/raw/mitre/*.xlsx` (enterprise / ics / mobile v18.1) → 18 JSON files + `mitre_index.json` manifest, 2 239 entries total. Extended `01_extract_pdf.py` with `process_mitre_json()` that renders each entry as a markdown block, runs the existing chunk pipeline, and tags chunks with `mitre_matrix` / `mitre_sheet` / `atelier_hint:"A4"`. Full pipeline run: 136 ANSSI + 949 MITRE = **1 085 chunks (~823 k tokens)** in `corpus/raw/index.jsonl`. **Plumbing**: added `make extract-mitre` target (now a dependency of `build-corpus`); added `openpyxl>=3.1.0` and `pdfplumber>=0.11.0` to runtime deps in `pyproject.toml`. Next: rebuild RAG index (`make build-rag`) so A4 chains can retrieve MITRE TTPs. | ~2h |
 
 ---

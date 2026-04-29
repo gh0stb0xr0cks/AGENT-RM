@@ -22,7 +22,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Literal
 
-
 # ============================================================================
 # PERIMETRE DU CORPUS
 # ============================================================================
@@ -477,6 +476,15 @@ GENERATION_THEMES: dict[str, list[str]] = {
         # Suivi
         "définition des indicateurs de suivi de la sécurité (KPI/KRI) post-homologation",
         "processus de revue annuelle et mise à jour de l'analyse EBIOS RM",
+        # Thèmes supplémentaires — atteignent le seuil ≥26 (AGENTS.md §3.1)
+        "intégration du plan de traitement dans le système de management de la sécurité",
+        "coordination entre le RSSI et l'autorité d'homologation pour la décision finale",
+        "traitement des risques résiduels inacceptables : options et arbitrage",
+        "suivi de l'efficacité des mesures de sécurité après déploiement",
+        "révision du plan de traitement suite à un incident ou une évolution du SI",
+        "comparaison coût/bénéfice des mesures de sécurité envisagées",
+        "gestion contractuelle des mesures de sécurité déléguées à des tiers",
+        "communication des risques résiduels aux parties prenantes de l'organisation",
     ],
 }
 
@@ -503,7 +511,7 @@ class CorpusExample:
     id: str                                              # ex: "qa_sante_a3_001"
     atelier: Literal["A1", "A2", "A3", "A4", "A5"]
     secteur: str                                         # valeur de SECTORS
-    source: Literal["synthetic", "anonymized", "official_doc", "counterexample"]
+    source: Literal["synthetic", "anssi_doc", "counterexample"]
     messages: list[Message]
     metadata: dict = field(default_factory=dict)
     is_counterexample: bool = False

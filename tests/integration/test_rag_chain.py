@@ -9,38 +9,34 @@ Couvre :
 Ces tests utilisent des mocks pour ChromaDB et le LLM (pas de GPU requis).
 """
 
-import json
 import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 import pytest
 
 # Assurer l'accès au projet racine
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from orchestration.utils.formatting import format_rag_context
-from orchestration.utils.chunk_formatter import format_atelier_output
 from orchestration.memory.atelier_context import (
-    AtelierContext,
     ATELIER_KEYS,
     ATELIER_ORDER,
+    AtelierContext,
 )
+from orchestration.utils.chunk_formatter import format_atelier_output
+from orchestration.utils.formatting import format_rag_context
 from rag.embeddings.chunker import chunk_text, chunk_text_by_pages
 from rag.embeddings.embedding_config import (
     ATELIER_VALUES,
     CHUNK_OVERLAP,
     CHUNK_SIZE,
     EMBEDDING_DIM,
-    EMBEDDING_MODEL,
     METADATA_SCHEMA,
     RETRIEVAL_K,
     SIMILARITY_THRESHOLD,
     SOURCE_VALUES,
     TYPE_VALUES,
 )
-
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Tests de la configuration RAG
@@ -57,6 +53,7 @@ class TestRagConfiguration:
         cette valeur au runtime. Ce test vérifie la valeur codée dans le source.
         """
         import inspect
+
         from rag.embeddings import embedding_config
 
         source = inspect.getsource(embedding_config)
@@ -314,7 +311,7 @@ class TestInterAtelierCoherence:
         ctx = AtelierContext()
 
         # Simuler la sortie de A1
-        a1_output = format_atelier_output(
+        format_atelier_output(
             "## Valeurs metier\n- Donnees de sante\n- Continuite service\n"
             "## Biens supports\n- Serveur HIS\n- Reseau WiFi",
             "A1",

@@ -57,12 +57,8 @@ import os
 import re
 import sys
 import time
-import uuid
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Iterator
 
 # ── Dépendance optionnelle tqdm ─────────────────────────────────────────────
 try:
@@ -75,9 +71,13 @@ except ImportError:
 sys.path.insert(0, str(Path(__file__).parent / "scripts"))
 try:
     from schema import (
-        ATELIERS, SECTORS, SYSTEM_PROMPT,
-        FORBIDDEN_TERMS, SCALE_PATTERN,
-        CorpusExample, Message,
+        ATELIERS,
+        FORBIDDEN_TERMS,
+        SCALE_PATTERN,
+        SECTORS,
+        SYSTEM_PROMPT,
+        CorpusExample,
+        Message,
     )
 except ImportError:
     sys.exit(
@@ -119,6 +119,68 @@ TARGET_PER_ATELIER_SECTEUR: dict[str, int] = {
 # → avec le multiplier --scale on atteint 6 000 en doublant A3/A4
 
 TOTAL_TARGET = sum(v * len(SECTORS) for v in TARGET_PER_ATELIER_SECTEUR.values())
+
+# Découpage thématique → étape EBIOS RM (A/B/C/D) par atelier.
+# Indices de coupure calés sur les groupes de thèmes de GENERATION_THEMES.
+_ETAPE_BREAKPOINTS: dict[str, list[int]] = {
+    "A1": [5, 10, 15],   # A:0-4 valeurs métier | B:5-9 biens supports | C:10-14 DICP | D:15+ périmètre/socle
+    "A2": [4, 8, 15],    # A:0-3 étatiques | B:4-7 cybercriminels | C:8-14 insiders/hacktivistes | D:15+ supply chain/méthode
+    "A3": [4, 12, 21],   # A:0-3 ransomware | B:4-11 exfiltration/sabotage | C:12-20 supply chain/fraude | D:21+ dangerosité/APT
+    "A4": [5, 10, 19],   # A:0-4 accès initiaux | B:5-9 persistance/latéral | C:10-18 modes opératoires/OT | D:19+ cloud/fraude/détection
+    "A5": [5, 10, 13],   # A:0-4 stratégies | B:5-9 plan de traitement | C:10-12 risque résiduel | D:13+ homologation/suivi
+}
+
+
+def _theme_to_etape(atelier: str, theme_idx: int) -> str:
+    """Mappe un indice de thème vers l'étape EBIOS RM correspondante (A/B/C/D)."""
+    for i, bp in enumerate(_ETAPE_BREAKPOINTS.get(atelier, [5, 10, 15])):
+        if theme_idx < bp:
+            return "ABCD"[i]
+    return "D"
+
+
+def _find_json_object(text: str) -> str | None:
+    """Extrait le premier objet JSON complet en gérant les accolades imbriquées."""
+    start = text.find('{')
+    if start == -1:
+        return None
+    depth = 0
+    in_string = False
+    escape_next = False
+    for i, ch in enumerate(text[start:], start):
+        if escape_next:
+            escape_next = False
+            continue
+        if ch == '\\' and in_string:
+            escape_next = True
+            continue
+        if ch == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0:
+                return text[start:i + 1]
+    return None
+
+
+def _extract_qr(data: dict) -> tuple[str, str]:
+    """Extrait (question, reponse) d'un dict JSON parsé. Gère reponse dict."""
+    q = str(data.get("question", "")).strip()
+    r = data.get("reponse", "")
+    if isinstance(r, dict):
+        r = "\n".join(f"{k} : {v}" for k, v in r.items())
+    r = str(r).strip()
+    return q, r
+
+
+def make_id(atelier: str, secteur: str, index: int) -> str:
+    """ID canonique d'un exemple (AGENTS.md §4.2)."""
+    return f"{atelier.lower()}_{secteur}_{index:04d}"
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -308,7 +370,7 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après :
   "reponse": "La réponse experte et détaillée (300-600 mots, terminologie ANSSI stricte)"
 }
 N'utilise JAMAIS : "biens essentiels", "actifs", "menaces", "PACS", "risque brut/net".
-Utilise TOUJOURS : "valeurs métier", "biens supports", "sources de risque", 
+Utilise TOUJOURS : "valeurs métier", "biens supports", "sources de risque",
 "objectifs visés", "plan de traitement du risque", "risque résiduel".
 """
 
@@ -840,12 +902,12 @@ class LLMBackend:
             messages=[{"role": "user", "content": prompt}],
         )
         return msg.content[0].text
-    
+
         #content = msg.content[0]
         #if content.type == "text":
         #    return content.text
         #raise ValueError(f"Unexpected content type: {content.type}")
-        
+
 
     def _generate_mistral(self, prompt: str, temperature: float) -> str:
         response = self._client.chat.complete(
@@ -939,11 +1001,6 @@ def build_prompt(
 # PARSING ET VALIDATION
 # ═══════════════════════════════════════════════════════════════════════════════
 
-_JSON_BLOCK_RE = re.compile(
-    r'```(?:json)?\s*(\{.*?\})\s*```|(\{[^{}]*"question"[^{}]*"reponse"[^{}]*\})',
-    re.DOTALL,
-)
-
 def parse_llm_response(
     raw: str,
     atelier: str,
@@ -951,56 +1008,46 @@ def parse_llm_response(
     template_idx: int,
 ) -> tuple[str, str]:
     """
-    Parse la réponse LLM pour extraire question et réponse.
-    Priorité : JSON structuré → regex → fallback texte brut.
-    Retourne (question, reponse).
-    """
-    # 1. Tentative JSON (méthode principale)
-    # Nettoyer les éventuelles balises markdown
-    cleaned = raw.strip()
-    if cleaned.startswith("```"):
-        cleaned = re.sub(r'^```(?:json)?\s*', '', cleaned)
-        cleaned = re.sub(r'\s*```$', '', cleaned)
+    Parse la réponse LLM pour extraire (question, reponse).
 
+    Stratégie robuste en deux étapes :
+      1. json.loads() direct sur le payload nettoyé (fences markdown retirés).
+      2. Extraction du premier objet JSON via comptage d'accolades imbriquées
+         (_find_json_object), puis json.loads().
+
+    Retourne ("", "") si aucune des deux stratégies n'aboutit. L'appelant doit
+    skipper l'exemple sur retour vide. On NE fabrique PAS de question/réponse
+    de fallback : cela produisait des artefacts (`": "actual question..."`)
+    quand un regex case-insensitive matchait la clé JSON `"question"`.
+    """
+    cleaned = raw.strip()
+    if "```" in cleaned:
+        cleaned = re.sub(r'^```(?:json)?\s*', '', cleaned, flags=re.MULTILINE)
+        cleaned = re.sub(r'\s*```\s*$', '', cleaned, flags=re.MULTILINE)
+        cleaned = cleaned.strip()
+
+    # 1. Parse direct
     try:
-        data = json.loads(cleaned)
-        question = str(data.get("question", "")).strip()
-        reponse  = str(data.get("reponse",  "")).strip()
-        if question and reponse:
-            return question, reponse
+        q, r = _extract_qr(json.loads(cleaned))
+        if q and r:
+            return q, r
     except json.JSONDecodeError:
         pass
 
-    # 2. Extraction regex
-    match = _JSON_BLOCK_RE.search(raw)
-    if match:
-        candidate = match.group(1) or match.group(2)
+    # 2. Recherche d'un objet JSON par comptage d'accolades
+    candidate = _find_json_object(cleaned) or _find_json_object(raw)
+    if candidate:
         try:
-            data = json.loads(candidate)
-            q = str(data.get("question", "")).strip()
-            r = str(data.get("reponse",  "")).strip()
+            q, r = _extract_qr(json.loads(candidate))
             if q and r:
                 return q, r
         except Exception:
             pass
 
-    # 3. Fallback : extraction par marqueurs textuels
-    q_match = re.search(
-        r'(?:\*{0,2}Question\s*:?\*{0,2})\s*(.+?)(?=\n\*{0,2}R[eé]ponse|\Z)',
-        raw, re.DOTALL | re.IGNORECASE,
+    log.warning(
+        f"    [{atelier}/{secteur}] parsing JSON impossible pour template {template_idx}"
     )
-    a_match = re.search(
-        r'(?:\*{0,2}R[eé]ponse\s*:?\*{0,2})\s*(.+)',
-        raw, re.DOTALL | re.IGNORECASE,
-    )
-
-    question = q_match.group(1).strip() if q_match else (
-        f"Comment appliquer l'atelier {atelier} EBIOS RM dans le secteur {secteur} "
-        f"(template {template_idx}) ?"
-    )
-    reponse = a_match.group(1).strip() if a_match else raw.strip()
-
-    return question, reponse
+    return "", ""
 
 
 def validate_inline(reponse: str, atelier: str) -> list[str]:
@@ -1098,6 +1145,10 @@ def generate_strate(
                 log.warning(f"    [{atelier}/{secteur}] parsing échoué : {e}")
                 continue
 
+            # Garde — un parse vide n'est jamais persisté (AGENTS.md §4.2)
+            if not question or not reponse:
+                continue
+
             # Validation inline
             issues = validate_inline(reponse, atelier)
             if issues:
@@ -1110,11 +1161,9 @@ def generate_strate(
                     log.warning(f"    [{atelier}/{secteur}] exemple rejeté inline")
                     continue
 
-            # Construction de l'objet CorpusExample
-            example_id = (
-                f"qa_{secteur}_{atelier.lower()}_"
-                f"t{t_idx:02d}_p{p_idx:02d}_{uuid.uuid4().hex[:6]}"
-            )
+            # Construction de l'objet CorpusExample (AGENTS.md §3.2 + §3.3 Volet 2)
+            example_id = make_id(atelier, secteur, existing + i)
+            word_count = len(reponse.split())
             example = CorpusExample(
                 id      = example_id,
                 atelier = atelier,
@@ -1125,11 +1174,20 @@ def generate_strate(
                     Message(role="assistant", content=reponse),
                 ],
                 metadata = {
+                    # Champs requis par §3.3
+                    "source_chunk":       None,
+                    "generation_theme":   f"{atelier}_t{t_idx:02d}",
+                    "generation_backend": backend.backend,
+                    "generation_model":   backend.model,
+                    "word_count":         word_count,
+                    "has_gv_scale":       bool(SCALE_PATTERN.search(reponse)),
+                    # Traçabilité interne
+                    "etape":         _theme_to_etape(atelier, t_idx),
+                    "type":          "synthetique",
+                    "qualite":       5 if not issues else 4,
                     "template_idx":  t_idx,
                     "persona_idx":   p_idx,
                     "temperature":   round(temperature, 3),
-                    "backend":       backend.backend,
-                    "model":         backend.model,
                     "inline_issues": issues,
                     "generated_at":  time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 },
@@ -1278,14 +1336,14 @@ def main() -> None:
 
     total_target = sum(t for _, _, t in plan)
 
-    print(f"╔══════════════════════════════════════════════════════╗")
+    print("╔══════════════════════════════════════════════════════╗")
     print(f"║  GÉNÉRATION CORPUS EBIOS RM — {args.backend.upper():<22} ║")
-    print(f"╠══════════════════════════════════════════════════════╣")
+    print("╠══════════════════════════════════════════════════════╣")
     print(f"║  Strates : {len(plan):>4}  │  Cible totale : {total_target:>6} exemples ║")
     print(f"║  Ateliers: {', '.join(ateliers):<44} ║")
     print(f"║  Secteurs: {len(secteurs):>2} / {len(SECTORS):<47} ║")
     print(f"║  Scale   : ×{args.scale:<2}  │  Workers : {args.workers:<3}  │  Seed : {args.seed:<6} ║")
-    print(f"╚══════════════════════════════════════════════════════╝\n")
+    print("╚══════════════════════════════════════════════════════╝\n")
 
     if args.dry_run:
         print("MODE DRY-RUN — plan de génération :")
